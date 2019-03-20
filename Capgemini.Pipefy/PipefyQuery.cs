@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Capgemini.Pipefy
 {
+    /// <summary>
+    /// A generic class for running a Pipefy API Query
+    /// </summary>
     public class PipefyQuery
     {
         private const string PipefyApiUrl = "https://app.pipefy.com/queries";
@@ -59,9 +62,15 @@ namespace Capgemini.Pipefy
             Query = string.Format("{{ \"query\": \"{0}\" }}", EscapeQuotes(query));
         }
 
-        private string EscapeQuotes(string text)
+        public static string EscapeQuotes(string text)
         {
             return text.Replace(@"""", @"\""");
+        }
+
+        public static string EscapeStringValue(string text)
+        {
+            text = text.Replace(@"""", @"\\""");
+            return text.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", @"\n");
         }
     }
 }

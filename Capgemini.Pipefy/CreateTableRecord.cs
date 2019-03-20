@@ -72,8 +72,8 @@ namespace Capgemini.Pipefy
                 List<string> fields = new List<string>();
                 foreach (var item in customFields)
                 {
-                    string value = string.Empty;
-
+                    string value = item.Value.ToString();
+                    value = PipefyQuery.EscapeStringValue(value);
                     fields.Add(string.Format(TableRecordFieldQueryPart, item.Key, value));
                 }
                 fieldsString = string.Join(", ", fields);

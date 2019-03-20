@@ -31,7 +31,7 @@ namespace Capgemini.Pipefy
         [RequiredArgument]
         public InArgument<object> Value { get; set; }
         
-        public override string SuccessMessage => "Success";
+        public override string SuccessMessage => "Updated";
 
         protected override string GetQuery(CodeActivityContext context)
         {
@@ -39,8 +39,7 @@ namespace Capgemini.Pipefy
             string fieldName = FieldName.Get(context);
             object fieldValue = Value.Get(context);
 
-            var query = string.Format(SetTableRecordFieldValueQuery, id, fieldName, fieldValue.ToString());
-            return query;
+            return string.Format(SetTableRecordFieldValueQuery, id, fieldName, fieldValue.ToString());
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
