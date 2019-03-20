@@ -42,7 +42,7 @@ namespace Capgemini.Pipefy
         [OverloadGroup("DataRow input")]
         public InArgument<DataRow> DataRowFields { get; set; }
 
-        [Category("Input")]
+        [Category("Output")]
         [Description("The ID of the created TableRecord")]
         [RequiredArgument]
         public OutArgument<long> TableRecordID { get; set; }

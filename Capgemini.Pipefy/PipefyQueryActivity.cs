@@ -13,9 +13,18 @@ namespace Capgemini.Pipefy
         [RequiredArgument]
         public InArgument<string> Bearer { get; set; }
 
+        [Category("Input")]
+        [Description("The request timeout (ms)")]
+        [DefaultValue(120000)]
+        public OutArgument<int> Timeout { get; set; }
+
         [Category("Output")]
         [Description("The status of the transaction")]
         public OutArgument<string> Status { get; set; }
+
+        [Category("Output")]
+        [Description("True if the action was successful")]
+        public OutArgument<string> Success { get; set; }
         
         public virtual string SuccessMessage => "Success";
         
@@ -26,6 +35,9 @@ namespace Capgemini.Pipefy
                 string bearer = Bearer.Get(context);
                 var queryText = GetQuery(context);
                 var query = new PipefyQuery(queryText, bearer);
+
+                int timeout = Timeout.Get(context);
+                query.SetTimeout(timeout);
                 
                 string result = query.Execute();
 
@@ -38,10 +50,12 @@ namespace Capgemini.Pipefy
                 ParseResult(context, json);
 
                 Status.Set(context, SuccessMessage);
+                Success.Set(context, true);
             }
             catch (Exception)
             {
                 Status.Set(context, "Failed");
+                Success.Set(context, false);
                 throw;
             }
         }

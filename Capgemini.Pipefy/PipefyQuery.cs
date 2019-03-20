@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -60,6 +61,14 @@ namespace Capgemini.Pipefy
         public void SetQuery(string query)
         {
             Query = string.Format("{{ \"query\": \"{0}\" }}", EscapeQuotes(query));
+        }
+
+        public void SetTimeout(int timeout)
+        {
+            if (request == null)
+                return;
+
+            request.Timeout = timeout;
         }
 
         public static string EscapeQuotes(string text)

@@ -19,7 +19,7 @@ namespace Capgemini.Pipefy
         [Category("Input")]
         [Description("TableRecord ID to be updated")]
         [RequiredArgument]
-        public InArgument<string> TableRecordID { get; set; }
+        public InArgument<long> TableRecordID { get; set; }
 
         [Category("Input")]
         [Description("Fields name to be updated")]
@@ -35,7 +35,7 @@ namespace Capgemini.Pipefy
 
         protected override string GetQuery(CodeActivityContext context)
         {
-            string id = TableRecordID.Get(context);
+            long id = TableRecordID.Get(context);
             string fieldName = FieldName.Get(context);
             object fieldValue = Value.Get(context);
 
