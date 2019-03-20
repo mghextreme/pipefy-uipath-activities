@@ -3,6 +3,7 @@ using System.Activities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace Capgemini.Pipefy
@@ -13,7 +14,7 @@ namespace Capgemini.Pipefy
     [Description("Activity for creating a TableRecord in a Pipefy Table.")]
     public class CreateTableRecord : PipefyQueryActivity
     {
-        private const string CreateTableRecordQuery = "mutation {{ createTableRecord(input: {{ table_id: \"{0}\" title: \"record\" due_date: \"{1}\" fields_attributes: [ {2} ] }}) {{ table_record {{ id title due_date record_fields {{ name value }} }} }} }}";
+        private const string CreateTableRecordQuery = "mutation {{ createTableRecord(input: {{ table_id: \"{0}\" title: \"{1}\" due_date: \"{2}\" fields_attributes: [ {3} ] }}) {{ table_record {{ id title due_date record_fields {{ name value }} }} }} }}";
         private const string TableRecordFieldQueryPart = "{{ field_id: \"{0}\", field_value: \"{1}\" }}";
 
         [Category("Input")]
@@ -22,7 +23,11 @@ namespace Capgemini.Pipefy
         public InArgument<string> TableID { get; set; }
 
         [Category("Input")]
-        [Description("Due Date to be set (defaults to one month from now)")]
+        [Description("TableRecord Title (defaults to first field value)")]
+        public InArgument<string> Title { get; set; }
+
+        [Category("Input")]
+        [Description("TableRecord Due Date (defaults to one month from now)")]
         public InArgument<DateTime> DueDate { get; set; }
 
         [Category("Data Input")]
@@ -48,6 +53,7 @@ namespace Capgemini.Pipefy
         {
             string tableId = TableID.Get(context);
             DateTime dueDate = DueDate.Get(context);
+            string title = Title.Get(context);
 
             if (dueDate == null || dueDate == DateTime.MinValue)
                 dueDate = DateTime.Now.AddMonths(1);
@@ -61,10 +67,13 @@ namespace Capgemini.Pipefy
                     dict = tempDict;
             }
 
-            return BuildQuery(tableId, dict, dueDate);
+            if (string.IsNullOrWhiteSpace(title))
+                title = dict.First().Value.ToString();
+
+            return BuildQuery(tableId, title, dict, dueDate);
         }
 
-        public static string BuildQuery(string tableId, Dictionary<string, object> customFields, DateTime dueDate)
+        public static string BuildQuery(string tableId, string title, Dictionary<string, object> customFields, DateTime dueDate)
         {
             string fieldsString = string.Empty;
             if (customFields.Count > 0)
@@ -79,7 +88,7 @@ namespace Capgemini.Pipefy
                 fieldsString = string.Join(", ", fields);
             }
 
-            return string.Format(CreateTableRecordQuery, tableId, dueDate.ToString("s"), fieldsString);
+            return string.Format(CreateTableRecordQuery, tableId, title, dueDate.ToString("s"), fieldsString);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
