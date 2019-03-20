@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Capgemini.Pipefy.Activities</id>
+    <version>1.0.0</version>
+    <title>Capgemini.Pipefy</title>
+    <authors>Capgemini</authors>
+    <owners>Capgemini</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Description</description>
+    <copyright>Copyright © 2019</copyright>
+  </metadata>
+  <files>
+    <file src="Capgemini.Pipefy\bin\Release\net461\Capgemini.Pipefy.dll" target="lib" />
+  </files>
+</package>

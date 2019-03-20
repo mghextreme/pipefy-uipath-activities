@@ -1,0 +1,80 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build (release)",
+            "group": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "-c",
+                "Release"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "increase build count",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+                "-file",
+                "C:\\NugetPackages\\increase-version.ps1",
+                "*.nuspec",
+                "0.0.0.1"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "dependsOn": [
+                "build (release)"
+            ],
+            "label": "pack",
+            "command": "nuget",
+            "type": "process",
+            "args": [
+                "pack",
+                "${workspaceFolder}"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "pack (to folder)",
+            "command": "nuget",
+            "type": "process",
+            "args": [
+                "pack",
+                "${workspaceFolder}",
+                "-OutputDirectory",
+                "C:\\NugetPackages"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "dependsOn": [
+                "build (release)",
+                "increase build count",
+                "pack (to folder)"
+            ],
+            "label": "pack (complete)",
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
