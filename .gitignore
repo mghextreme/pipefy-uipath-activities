@@ -41,3 +41,5 @@ artifacts/
 scriptcs_bin/
 packages/
 /*.nupkg
+
+Capgemini.Pipefy.Test/testconfig.json

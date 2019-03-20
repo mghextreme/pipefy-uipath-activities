@@ -16,7 +16,7 @@ namespace Capgemini.Pipefy
         [Category("Input")]
         [Description("The request timeout (ms)")]
         [DefaultValue(120000)]
-        public OutArgument<int> Timeout { get; set; }
+        public InArgument<int> Timeout { get; set; }
 
         [Category("Output")]
         [Description("The status of the transaction")]
@@ -24,7 +24,7 @@ namespace Capgemini.Pipefy
 
         [Category("Output")]
         [Description("True if the action was successful")]
-        public OutArgument<string> Success { get; set; }
+        public OutArgument<bool> Success { get; set; }
         
         public virtual string SuccessMessage => "Success";
         

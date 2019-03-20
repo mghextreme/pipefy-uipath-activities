@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Capgemini.Pipefy\Capgemini.Pipefy.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="testconfig.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
