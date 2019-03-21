@@ -9,9 +9,9 @@ using Newtonsoft.Json.Linq;
 namespace Capgemini.Pipefy.TableRecord
 {
     /// <summary>
-    /// Activity for creating a TableRecord in a Pipefy Table.
+    /// Creates a TableRecord in a Pipefy Table.
     /// </summary>
-    [Description("Activity for creating a TableRecord in a Pipefy Table.")]
+    [Description("Creates a TableRecord in a Pipefy Table.")]
     public class CreateTableRecord : PipefyQueryActivity
     {
         private const string CreateTableRecordQuery = "mutation {{ createTableRecord(input: {{ table_id: \"{0}\" title: \"{1}\" due_date: \"{2}\" fields_attributes: [ {3} ] }}) {{ table_record {{ id title due_date record_fields {{ name value }} }} }} }}";
