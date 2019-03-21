@@ -19,7 +19,7 @@ namespace Capgemini.Pipefy.TableRecord
 
         [Category("Output")]
         [Description("TableRecord obtained (JObject)")]
-        public InArgument<JObject> TableRecord { get; set; }
+        public OutArgument<JObject> TableRecord { get; set; }
 
         protected override string GetQuery(CodeActivityContext context)
         {

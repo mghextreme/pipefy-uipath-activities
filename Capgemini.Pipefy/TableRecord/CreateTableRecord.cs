@@ -57,7 +57,7 @@ namespace Capgemini.Pipefy.TableRecord
 
             if (dueDate == null || dueDate == DateTime.MinValue)
                 dueDate = DateTime.Now.AddMonths(1);
-            
+
             var dict = DictionaryFields.Get(context);
             if (dict == null || dict.Count == 0)
             {
@@ -88,7 +88,7 @@ namespace Capgemini.Pipefy.TableRecord
                 fieldsString = string.Join(", ", fields);
             }
 
-            return string.Format(CreateTableRecordQuery, tableId, title, dueDate.ToString("s"), fieldsString);
+            return string.Format(CreateTableRecordQuery, tableId, PipefyQuery.EscapeStringValue(title), dueDate.ToString("s"), fieldsString);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
