@@ -15,9 +15,7 @@ namespace Capgemini.Pipefy.Test
         {
             var config = TestConfiguration.Instance.Configuration;
 
-            var dict = new Dictionary<string, object>();
-            dict["Bearer"] = config["api"].Value<string>("bearer");
-            dict["Timeout"] = config["api"].Value<int>("timeout");
+            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
             dict["TableID"] = config["table"].Value<string>("id");
             dict["Title"] = "Title " + DateTime.Now.Ticks;
             dict["DueDate"] = DateTime.Now.AddDays(10).Date;
@@ -45,7 +43,6 @@ namespace Capgemini.Pipefy.Test
             var act = new CreateTableRecord();
 
             var result = WorkflowInvoker.Invoke(act, dict);
-
             Assert.IsTrue((bool)result["Success"]);
             Assert.IsTrue((long)result["TableRecordID"] > 0);
         }

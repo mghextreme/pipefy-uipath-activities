@@ -12,7 +12,7 @@ namespace Capgemini.Pipefy.Table
     [Description("Gets detailed information about a Table in Pipefy.")]
     public class GetTable : PipefyQueryActivity
     {
-        private const string GetTableRecordQuery = @"table(id: ""{0}""){{ description id name public statuses {{ id name }} table_fields {{ description id internal_id type required label }} table_records_count title_field {{ id label internal_id type }} url }}";
+        private const string GetTableQuery = @"query {{ table(id: ""{0}""){{ description id name public statuses {{ id name }} table_fields {{ description id internal_id type required label }} table_records_count title_field {{ id label internal_id type }} url }} }}";
 
         [Category("Input")]
         [Description("ID of the Table to be obtained")]
@@ -27,7 +27,7 @@ namespace Capgemini.Pipefy.Table
         protected override string GetQuery(CodeActivityContext context)
         {
             var tableId = TableID.Get(context);
-            return string.Format(GetTableRecordQuery, tableId);
+            return string.Format(GetTableQuery, tableId);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -60,6 +61,14 @@ namespace Capgemini.Pipefy.Test
                     _configuration = (JObject)JToken.ReadFrom(jsonReader);
                 }
             }
+        }
+
+        public Dictionary<string, object> GetDefaultActivityArguments()
+        {
+            var dict = new Dictionary<string, object>();
+            dict["Bearer"] = Configuration["api"].Value<string>("bearer");
+            dict["Timeout"] = Configuration["api"].Value<int>("timeout");
+            return dict;
         }
     }
 }

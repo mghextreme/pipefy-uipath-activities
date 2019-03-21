@@ -12,7 +12,7 @@ namespace Capgemini.Pipefy.Table
     [Description("Gets information about multiple Tables in Pipefy.")]
     public class GetTables : PipefyQueryActivity
     {
-        private const string GetTableRecordQuery = @"tables(ids: [ {0} ]){{ id name description public table_records_count title_field {{ id type unique }} url table_fields {{ id description internal_id type is_multiple required }} }}";
+        private const string GetTablesQuery = @"query {{ tables(ids: [ {0} ]){{ id name description public table_records_count }} }}";
 
         [Category("Input")]
         [Description("IDs of the Tables to be obtained")]
@@ -28,7 +28,7 @@ namespace Capgemini.Pipefy.Table
         {
             var tableIds = TableIDs.Get(context);
             string tablesString = "\"" + string.Join("\", \"", tableIds) + "\"";
-            return string.Format(GetTableRecordQuery, tablesString);
+            return string.Format(GetTablesQuery, tablesString);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
