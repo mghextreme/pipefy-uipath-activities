@@ -5,9 +5,9 @@ using Newtonsoft.Json.Linq;
 namespace Capgemini.Pipefy.TableRecord
 {
     /// <summary>
-    /// Gets a TableRecord in a Pipefy Table.
+    /// Gets detailed information about a TableRecord in a Pipefy Table.
     /// </summary>
-    [Description("Gets a TableRecord in a Pipefy Table.")]
+    [Description("Gets detailed information about a TableRecord in a Pipefy Table.")]
     public class GetTableRecord : PipefyQueryActivity
     {
         private const string GetTableRecordQuery = "table_record(id: {0}){{ created_at created_by {{ id name email }} due_date finished_at id status {{ id name }} record_fields {{ name value }} table {{ id name }} title updated_at url }}";

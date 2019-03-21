@@ -15,7 +15,7 @@ namespace Capgemini.Pipefy.Table
         private const string GetTableRecordQuery = @"tables(ids: [ {0} ]){{ id name description public table_records_count title_field {{ id type unique }} url table_fields {{ id description internal_id type is_multiple required }} }}";
 
         [Category("Input")]
-        [Description("Table IDs to be obtained")]
+        [Description("IDs of the Tables to be obtained")]
         [RequiredArgument]
         public InArgument<string[]> TableIDs { get; set; }
 
