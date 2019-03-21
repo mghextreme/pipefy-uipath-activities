@@ -4,15 +4,9 @@
         "timeout": 30000
     },
     "table": {
-        "id": "",
-        "title_field": "field1",
-        "custom_fields": [{
-            "name": "field1",
-            "type": "text"
-        },
-        {
-            "name": "field2",
-            "type": "number"
-        }]
+        "id": ""
+    },
+    "pipe": {
+        "id": ""
     }
 }
