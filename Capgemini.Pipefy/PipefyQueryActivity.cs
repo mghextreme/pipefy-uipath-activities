@@ -47,7 +47,7 @@ namespace Capgemini.Pipefy
                     throw new PipefyException("Web request returned Status Code " + query.StatusCode);
 
                 JObject json = ParseJson(result);
-                ParseResult(context, json);
+                ParseResult(context, json["data"] as JObject);
 
                 Status.Set(context, SuccessMessage);
                 Success.Set(context, true);

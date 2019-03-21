@@ -13,10 +13,12 @@ namespace Capgemini.Pipefy.Test
     public class TableRecordTest
     {
         [TestMethod]
-        public void TableRecord_CreateByDictionary_Success()
+        public void TableRecord_CreateByDictionaryAndDelete_Success()
         {
             var config = TestConfiguration.Instance.Configuration;
             string title = "Title " + DateTime.Now.Ticks;
+
+            // Create
 
             var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
             dict["TableID"] = config["table"].Value<string>("id");
@@ -29,13 +31,25 @@ namespace Capgemini.Pipefy.Test
             var result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
             Assert.IsTrue((long)result["TableRecordID"] > 0);
+
+            // Delete
+
+            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
+            dict["TableRecordID"] = result["TableRecordID"];
+
+            var act2 = new DeleteTableRecord();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
         }
-        
+
         [TestMethod]
-        public void TableRecord_CreateByDataRow_Success()
+        public void TableRecord_CreateByDataRowAndDelete_Success()
         {
             var config = TestConfiguration.Instance.Configuration;
             string title = "Title " + DateTime.Now.Ticks;
+
+            // Create
 
             var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
             dict["TableID"] = config["table"].Value<string>("id");
@@ -48,6 +62,16 @@ namespace Capgemini.Pipefy.Test
             var result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
             Assert.IsTrue((long)result["TableRecordID"] > 0);
+
+            // Delete
+
+            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
+            dict["TableRecordID"] = result["TableRecordID"];
+
+            var act2 = new DeleteTableRecord();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
         }
     }
 

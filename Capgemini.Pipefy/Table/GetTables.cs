@@ -33,7 +33,7 @@ namespace Capgemini.Pipefy.Table
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
         {
-            var tables = json["data"]["tables"] as JArray;
+            var tables = json["tables"] as JArray;
             var tablesList = new List<JObject>();
             foreach (var item in tables)
                 tablesList.Add(item as JObject);

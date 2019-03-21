@@ -93,7 +93,7 @@ namespace Capgemini.Pipefy.TableRecord
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
         {
-            JObject joResult = json["data"]["createTableRecord"] as JObject;
+            JObject joResult = json["createTableRecord"] as JObject;
             JObject joTableRecord = joResult["table_record"] as JObject;
             long idPipefy = joTableRecord.Value<long>("id");
             TableRecordID.Set(context, idPipefy);
