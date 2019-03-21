@@ -34,10 +34,6 @@ namespace Capgemini.Pipefy.Test
                     _instance = new TestConfiguration();
                 return _instance;
             }
-            set
-            {
-                _instance = value;
-            }
         }
 
         public TestConfiguration(string configFile)
