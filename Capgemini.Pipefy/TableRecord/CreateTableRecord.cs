@@ -63,7 +63,7 @@ namespace Capgemini.Pipefy.TableRecord
             {
                 var dataRow = DataRowFields.Get(context);
                 var tempDict = DataRowToDictionary(dataRow);
-                if (tempDict != null && dict.Count > 0)
+                if (tempDict != null && tempDict.Count > 0)
                     dict = tempDict;
             }
 
@@ -104,7 +104,7 @@ namespace Capgemini.Pipefy.TableRecord
             var dict = new Dictionary<string, object>();
             if (row == null || row.Table.Columns.Count == 0)
                 return dict;
-            
+
             foreach (DataColumn column in row.Table.Columns)
             {
                 string colName = column.ColumnName;
