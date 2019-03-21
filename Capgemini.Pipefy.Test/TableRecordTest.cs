@@ -1,6 +1,7 @@
 using System;
 using System.Activities;
 using System.Collections.Generic;
+using Capgemini.Pipefy.TableRecord;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 

@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace Capgemini.Pipefy
+namespace Capgemini.Pipefy.TableRecord
 {
     /// <summary>
     /// Activity for creating a TableRecord in a Pipefy Table.

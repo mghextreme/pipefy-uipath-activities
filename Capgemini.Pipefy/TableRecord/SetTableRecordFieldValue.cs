@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Capgemini.Pipefy
+namespace Capgemini.Pipefy.TableRecord
 {
     /// <summary>
     /// Activity for updating a field in a TableReacord in Pipefy.

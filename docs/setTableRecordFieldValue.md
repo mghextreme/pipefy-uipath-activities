@@ -1,7 +1,7 @@
 # SetTableRecordFieldValue
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/setTableRecordFieldValue/)  
-[Implemented Class](../Capgemini.Pipefy/SetTableRecordFieldValue.cs)
+[Implemented Class](../Capgemini.Pipefy/TableRecord/SetTableRecordFieldValue.cs)
 
 Sets a record field value in a Table.
 

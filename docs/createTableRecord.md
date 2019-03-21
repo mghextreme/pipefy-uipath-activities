@@ -1,7 +1,7 @@
 # CreateTableRecord
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/createTableRecord/)  
-[Implemented Class](../Capgemini.Pipefy/CreateTableRecord.cs)
+[Implemented Class](../Capgemini.Pipefy/TableRecord/CreateTableRecord.cs)
 
 Creates a record in a Table.
 
