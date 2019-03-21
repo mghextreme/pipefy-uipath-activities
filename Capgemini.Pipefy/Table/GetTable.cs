@@ -21,7 +21,6 @@ namespace Capgemini.Pipefy.Table
 
         [Category("Output")]
         [Description("Table obtained (JObject)")]
-        [RequiredArgument]
         public OutArgument<JObject> Table { get; set; }
 
         protected override string GetQuery(CodeActivityContext context)

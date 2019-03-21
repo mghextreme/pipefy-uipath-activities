@@ -11,14 +11,27 @@ namespace Capgemini.Pipefy.Phase
     [Description("Gets detailed information on a Phase.")]
     public class GetPhase : PipefyQueryActivity
     {
+        private const string GetPhaseQuery = "query {{ phase(id: {0}){{ cards_can_be_moved_to_phases {{ id name done }} cards_count description done expiredCardsCount fields {{ description id is_multiple label required type }} id lateCardsCount name }} }}";
+
+        [Category("Input")]
+        [Description("ID of the Phase to be obtained")]
+        [RequiredArgument]
+        public InArgument<long> PhaseID { get; set; }
+
+        [Category("Output")]
+        [Description("Phase obtained (JObject)")]
+        public OutArgument<JObject> Phase { get; set; }
+
         protected override string GetQuery(CodeActivityContext context)
         {
-            throw new NotImplementedException();
+            var phaseId = PhaseID.Get(context);
+            return string.Format(GetPhaseQuery, phaseId);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
         {
-            throw new NotImplementedException();
+            var phase = json["pipe"] as JObject;
+            Phase.Set(context, phase);
         }
     }
 }
