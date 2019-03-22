@@ -16,11 +16,6 @@ namespace Capgemini.Pipefy
             text = text.Replace(@"""", @"\\""");
             return text.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", @"\n");
         }
-        
-        public static string EscapeQuotes(this string text)
-        {
-            return text.Replace(@"""", @"\""");
-        }
 
         public static Dictionary<string, object> ToDictionary(this DataRow row)
         {

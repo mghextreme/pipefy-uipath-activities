@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace Capgemini.Pipefy
 {
@@ -60,7 +61,9 @@ namespace Capgemini.Pipefy
 
         public void SetQuery(string query)
         {
-            Query = string.Format("{{ \"query\": \"{0}\" }}", query.EscapeQuotes());
+            var jObj = new JObject();
+            jObj["query"] = query;
+            Query = jObj.ToString();
         }
 
         public void SetTimeout(int timeout)
