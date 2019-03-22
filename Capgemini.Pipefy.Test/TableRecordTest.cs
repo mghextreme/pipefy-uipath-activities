@@ -73,6 +73,19 @@ namespace Capgemini.Pipefy.Test
             Assert.IsTrue((bool)result["Success"]);
             Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TableRecord_AvoidDictionaryAndDataRow_Exception()
+        {
+            var config = TestConfiguration.Instance.Configuration;
+            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
+            dict["TableID"] = config["table"].Value<string>("id");
+            dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
+            dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            var act = new CreateTableRecord();
+            WorkflowInvoker.Invoke(act, dict);
+        }
     }
 
     internal class TestTable

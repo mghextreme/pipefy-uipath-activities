@@ -60,7 +60,7 @@ namespace Capgemini.Pipefy
 
         public void SetQuery(string query)
         {
-            Query = string.Format("{{ \"query\": \"{0}\" }}", EscapeQuotes(query));
+            Query = string.Format("{{ \"query\": \"{0}\" }}", query.EscapeQuotes());
         }
 
         public void SetTimeout(int timeout)
@@ -69,17 +69,6 @@ namespace Capgemini.Pipefy
                 return;
 
             request.Timeout = timeout;
-        }
-
-        public static string EscapeQuotes(string text)
-        {
-            return text.Replace(@"""", @"\""");
-        }
-
-        public static string EscapeStringValue(string text)
-        {
-            text = text.Replace(@"""", @"\\""");
-            return text.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", @"\n");
         }
     }
 }

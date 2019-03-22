@@ -30,7 +30,7 @@ namespace Capgemini.Pipefy.Phase
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
         {
-            var phase = json["pipe"] as JObject;
+            var phase = json["phase"] as JObject;
             Phase.Set(context, phase);
         }
     }

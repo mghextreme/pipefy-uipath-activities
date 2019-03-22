@@ -11,7 +11,7 @@ namespace Capgemini.Pipefy.Pipe
     [Description("Gets detailes information on a Pipe.")]
     public class GetPipe : PipefyQueryActivity
     {
-        private const string GetPipeQuery = "query {{ pipe(id: {0}){{ anyone_can_create_card cards_count description id name opened_cards_count phases {{ cards_count id name done }} public title_field {{ id }} }} }}";
+        private const string GetPipeQuery = "query {{ pipe(id: {0}){{ anyone_can_create_card cards_count description id labels {{ id name }} name opened_cards_count phases {{ cards_count id name done }} public title_field {{ id }} }} }}";
 
         [Category("Input")]
         [Description("ID of the Pipe to be obtained")]

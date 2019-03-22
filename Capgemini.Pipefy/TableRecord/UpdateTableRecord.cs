@@ -41,11 +41,11 @@ namespace Capgemini.Pipefy.TableRecord
 
             string titleStr = string.Empty;
             if (!string.IsNullOrWhiteSpace(title))
-                titleStr = string.Format("title: \"{0}\"", PipefyQuery.EscapeStringValue(title));
+                titleStr = string.Format("title: \"{0}\"", title.EscapeQueryValue());
 
             string dueDateStr = string.Empty;
             if (dueDate != null && dueDate != DateTime.MinValue)
-                dueDateStr = string.Format("due_date: \"{0}\"", dueDate.ToString("s"));
+                dueDateStr = string.Format("due_date: \"{0}\"", dueDate.ToPipefyFormat());
 
             string statusStr = string.Empty;
             if (!string.IsNullOrWhiteSpace(statusId))

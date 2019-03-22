@@ -62,7 +62,7 @@ namespace Capgemini.Pipefy.TableRecord
             if (dict == null || dict.Count == 0)
             {
                 var dataRow = DataRowFields.Get(context);
-                var tempDict = DataRowToDictionary(dataRow);
+                var tempDict = dataRow.ToDictionary();
                 if (tempDict != null && tempDict.Count > 0)
                     dict = tempDict;
             }
@@ -82,13 +82,13 @@ namespace Capgemini.Pipefy.TableRecord
                 foreach (var item in customFields)
                 {
                     string value = item.Value.ToString();
-                    value = PipefyQuery.EscapeStringValue(value);
+                    value = value.EscapeQueryValue();
                     fields.Add(string.Format(TableRecordFieldQueryPart, item.Key, value));
                 }
                 fieldsString = string.Join(", ", fields);
             }
 
-            return string.Format(CreateTableRecordQuery, tableId, PipefyQuery.EscapeStringValue(title), dueDate.ToString("s"), fieldsString);
+            return string.Format(CreateTableRecordQuery, tableId, title.EscapeQueryValue(), dueDate.ToPipefyFormat(), fieldsString);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
@@ -97,21 +97,6 @@ namespace Capgemini.Pipefy.TableRecord
             JObject joTableRecord = joResult["table_record"] as JObject;
             long idPipefy = joTableRecord.Value<long>("id");
             TableRecordID.Set(context, idPipefy);
-        }
-
-        private Dictionary<string, object> DataRowToDictionary(DataRow row)
-        {
-            var dict = new Dictionary<string, object>();
-            if (row == null || row.Table.Columns.Count == 0)
-                return dict;
-
-            foreach (DataColumn column in row.Table.Columns)
-            {
-                string colName = column.ColumnName;
-                dict.Add(colName, row[colName]);
-            }
-
-            return dict;
         }
     }
 }

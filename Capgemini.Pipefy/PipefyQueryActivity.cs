@@ -73,7 +73,12 @@ namespace Capgemini.Pipefy
             if (jaErrors != null)
             {
                 if (jaErrors.Count > 0)
-                    throw new PipefyException(jaErrors[0]["message"].ToString());
+                {
+                    string errorMessage = jaErrors.Count + " error(s) found:";
+                    foreach (var error in jaErrors)
+                        errorMessage += "\n- " + error.Value<string>("message");
+                    throw new PipefyException(errorMessage);
+                }
             }
 
             return json;
