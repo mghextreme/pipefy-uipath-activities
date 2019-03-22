@@ -32,13 +32,11 @@ namespace Capgemini.Pipefy.TableRecord
 
         [Category("Data Input")]
         [Description("Custom fields for record (Dictionary)")]
-        [RequiredArgument]
         [OverloadGroup("Dictionary input")]
         public InArgument<Dictionary<string, object>> DictionaryFields { get; set; }
 
         [Category("Data Input")]
         [Description("Custom fields for record (DataRow)")]
-        [RequiredArgument]
         [OverloadGroup("DataRow input")]
         public InArgument<DataRow> DataRowFields { get; set; }
 

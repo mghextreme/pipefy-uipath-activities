@@ -15,7 +15,7 @@ namespace Capgemini.Pipefy.Card
     {
         private const string CreateCardQuery = "mutation {{ createCard(input: {{ pipe_id: {0} {1} {2} }}) {3} }}";
         private const string CreateCardFieldQueryPart = "{{ field_id: \"{0}\" field_value: \"{1}\" }}";
-        private const string CreateCardReturnQuery = "{{ card {{ createdAt createdBy {{ email id name }} current_phase {{ id name }} due_date expiration {{ shouldExpireAt }} id url }} }}";
+        private const string CreateCardReturnQuery = "{ card { createdAt createdBy { email id name } current_phase { id name } due_date expiration { shouldExpireAt } id url } }";
 
         [Category("Input")]
         [Description("ID of the users to be assigned to the card")]
@@ -27,13 +27,11 @@ namespace Capgemini.Pipefy.Card
 
         [Category("Data Input")]
         [Description("Custom fields for the card (Dictionary)")]
-        [RequiredArgument]
         [OverloadGroup("Dictionary input")]
         public InArgument<Dictionary<string, object>> DictionaryFields { get; set; }
 
         [Category("Data Input")]
         [Description("Custom fields for the card (DataRow)")]
-        [RequiredArgument]
         [OverloadGroup("DataRow input")]
         public InArgument<DataRow> DataRowFields { get; set; }
 
@@ -123,7 +121,7 @@ namespace Capgemini.Pipefy.Card
                 cardFields.Add(string.Format("title: \"{0}\"", title.EscapeQueryValue()));
             }
 
-            return string.Join("", cardFields);
+            return string.Join(" ", cardFields);
         }
 
         private string GetCardCustomFieldsQuery(CodeActivityContext context)
