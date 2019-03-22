@@ -10,10 +10,10 @@ namespace Capgemini.Pipefy.TableRecord
     [Description("Deletes a TableRecord in a Pipefy Table.")]
     public class DeleteTableRecord : PipefyQueryActivity
     {
-        private const string DeleteTableRecordQuery = @"mutation {{ deleteTableRecord(input: {{ id: ""{0}"" }}){{ clientMutationId success }} }}";
+        private const string DeleteTableRecordQuery = @"mutation {{ deleteTableRecord(input: {{ id: ""{0}"" }}){{ success }} }}";
 
         [Category("Input")]
-        [Description("TableRecord ID to be obtained")]
+        [Description("ID of the TableRecord to be deleted")]
         [RequiredArgument]
         public InArgument<long> TableRecordID { get; set; }
 
