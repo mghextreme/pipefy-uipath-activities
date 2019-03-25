@@ -4,22 +4,52 @@ This is a set of Custom Activities for UiPath with the objective of easing the c
 
 ## Available actions
 
+### Attachment
+
+- [UploadAttachment]()
+
 ### Card
 
-### Pipe
-
-### Phase
+- [CreateCard]()
+- [DeleteCard]()
+- [GetCard]()
+- [MoveCardToPhase]()
+- [UpdateCard]()
+- [UpdateCardField]()
 
 ### Organization
 
+- [GetOrganization]()
+- [GetOrganizations]()
+
+### Phase
+
+- [GetPhase]()
+
+### Pipe
+
+- [GetPipe]()
+
 ### Table
+
+- [GetTable]()
+- [GetTables]()
 
 ### TableRecord
 
-- [Create](docs/createTableRecord.md)
-- [SetFieldValue](docs/setTableRecordFieldValue.md)
+- [CreateTableRecord](docs/createTableRecord.md)
+- [DeleteTableRecord](docs/deleteTableRecord.md)
+- [GetTableRecord](docs/getTableRecord.md)
+- [SetTableRecordFieldValue](docs/setTableRecordFieldValue.md)
+- [UpdateTableRecord](docs/updateTableRecord.md)
 
 ### User
+
+- [Me](docs/me.md)
+
+### Custom
+
+- [Custom Query](docs/custom-query.md)
 
 ---
 
