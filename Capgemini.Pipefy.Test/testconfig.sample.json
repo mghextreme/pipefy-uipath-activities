@@ -3,6 +3,9 @@
         "bearer": "",
         "timeout": 30000
     },
+    "organization": {
+        "id": ""
+    },
     "table": {
         "id": ""
     },
