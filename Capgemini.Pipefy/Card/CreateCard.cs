@@ -37,7 +37,7 @@ namespace Capgemini.Pipefy.Card
 
         [Category("Input")]
         [Description("ID of the labels to be added to the card")]
-        public InArgument<long[]> LabelsIDs { get; set; }
+        public InArgument<long[]> LabelIDs { get; set; }
 
         [Category("Input")]
         [Description("ID of the parent Cards")]
@@ -81,7 +81,7 @@ namespace Capgemini.Pipefy.Card
         {
             var assignees = AssigneeIDs.Get(context);
             var dueDate = DueDate.Get(context);
-            var labels = LabelsIDs.Get(context);
+            var labels = LabelIDs.Get(context);
             var parents = ParentsIDs.Get(context);
             var phase = PhaseID.Get(context);
             var title = Title.Get(context);
