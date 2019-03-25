@@ -57,7 +57,7 @@ namespace Capgemini.Pipefy.Attachment
 
             UploadFile(fileInfo);
             var resultUrl = new Uri(amazonUrl);
-            FileUrl.Set(context, resultUrl.LocalPath);
+            FileUrl.Set(context, resultUrl.LocalPath.TrimStart('\\', '/'));
         }
 
         protected override string GetQuery(CodeActivityContext context)

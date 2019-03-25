@@ -24,9 +24,6 @@ namespace Capgemini.Pipefy
 
         public static string ToQueryValue(this object obj)
         {
-            if (obj is DateTime dateTime)
-                obj = dateTime.ToString("s");
-
             return JsonConvert.SerializeObject(obj);
         }
     }
