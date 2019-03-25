@@ -19,6 +19,8 @@ namespace Capgemini.Pipefy
 
         public HttpStatusCode StatusCode { get; protected set; }
 
+        public string Method { get; protected set; }
+
         public PipefyQuery()
         {
             request = WebRequest.Create(PipefyApiUrl);
@@ -36,6 +38,11 @@ namespace Capgemini.Pipefy
         public PipefyQuery(string query, string authorization) : this(query)
         {
             SetAuthorization(authorization);
+        }
+        
+        public PipefyQuery(string query, string authorization, string method) : this(query, authorization)
+        {
+            SetMethod(method);
         }
 
         public string Execute()
@@ -64,6 +71,24 @@ namespace Capgemini.Pipefy
             var jObj = new JObject();
             jObj["query"] = query;
             Query = jObj.ToString();
+        }
+
+        private void SetMethod(string method)
+        {
+            if (request == null)
+                return;
+
+            method = method.ToUpper();
+            switch (method)
+            {
+                case "GET":
+                case "POST":
+                case "PUT":
+                case "OPTIONS":
+                    request.Method = method;
+                    break;
+            }
+            throw new ArgumentException(string.Format("The method {0} is unsupported", method));
         }
 
         public void SetTimeout(int timeout)

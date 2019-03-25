@@ -9,6 +9,7 @@
   <ItemGroup>
     <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   
   <ItemGroup>

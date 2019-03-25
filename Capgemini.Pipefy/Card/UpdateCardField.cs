@@ -36,7 +36,7 @@ namespace Capgemini.Pipefy.Card
             string fieldId = FieldID.Get(context);
             object fieldValue = Value.Get(context);
 
-            return string.Format(UpdateCardFieldQuery, id, fieldId, "\"" + fieldValue.ToString() + "\"");
+            return string.Format(UpdateCardFieldQuery, id, fieldId, fieldValue.ToQueryValue());
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)

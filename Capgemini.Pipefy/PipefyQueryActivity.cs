@@ -25,29 +25,14 @@ namespace Capgemini.Pipefy
         [Category("Output")]
         [Description("True if the action was successful")]
         public OutArgument<bool> Success { get; set; }
-        
+
         public virtual string SuccessMessage => "Success";
-        
+
         protected override void Execute(CodeActivityContext context)
         {
             try
             {
-                string bearer = Bearer.Get(context);
-                var queryText = GetQuery(context);
-                var query = new PipefyQuery(queryText, bearer);
-
-                int timeout = Timeout.Get(context);
-                query.SetTimeout(timeout);
-                
-                string result = query.Execute();
-
-                if (query.StatusCode != HttpStatusCode.OK &&
-                    query.StatusCode != HttpStatusCode.Created &&
-                    query.StatusCode != HttpStatusCode.Accepted)
-                    throw new PipefyException("Web request returned Status Code " + query.StatusCode);
-
-                JObject json = ParseJson(result);
-                ParseResult(context, json["data"] as JObject);
+                SafeExecute(context);
 
                 Status.Set(context, SuccessMessage);
                 Success.Set(context, true);
@@ -60,9 +45,33 @@ namespace Capgemini.Pipefy
             }
         }
 
+        protected virtual void SafeExecute(CodeActivityContext context)
+        {
+            string bearer = Bearer.Get(context);
+            var queryText = GetQuery(context);
+            var query = new PipefyQuery(queryText, bearer);
+
+            int timeout = Timeout.Get(context);
+            query.SetTimeout(timeout);
+            
+            string result = query.Execute();
+            CheckStatusCode(query.StatusCode);
+
+            JObject json = ParseJson(result);
+            ParseResult(context, json["data"] as JObject);
+        }
+
         protected abstract string GetQuery(CodeActivityContext context);
 
-        private JObject ParseJson(string result)
+        protected void CheckStatusCode(HttpStatusCode statusCode)
+        {
+            if (statusCode != HttpStatusCode.OK &&
+                statusCode != HttpStatusCode.Created &&
+                statusCode != HttpStatusCode.Accepted)
+                throw new PipefyException("Web request returned Status Code " + statusCode);
+        }
+
+        protected JObject ParseJson(string result)
         {
             if (string.IsNullOrWhiteSpace(result))
                 throw new PipefyException("The response received was empty.");

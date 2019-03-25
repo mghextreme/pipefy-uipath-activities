@@ -39,7 +39,7 @@ namespace Capgemini.Pipefy.TableRecord
             string fieldId = FieldID.Get(context);
             object fieldValue = Value.Get(context);
 
-            return string.Format(SetTableRecordFieldValueQuery, id, fieldId, "\"" + fieldValue.ToString() + "\"");
+            return string.Format(SetTableRecordFieldValueQuery, id, fieldId, fieldValue.ToQueryValue());
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)

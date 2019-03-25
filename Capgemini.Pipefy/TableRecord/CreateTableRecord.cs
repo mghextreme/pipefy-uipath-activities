@@ -14,8 +14,8 @@ namespace Capgemini.Pipefy.TableRecord
     [Description("Creates a TableRecord in a Pipefy Table.")]
     public class CreateTableRecord : PipefyQueryActivity
     {
-        private const string CreateTableRecordQuery = "mutation {{ createTableRecord(input: {{ table_id: \"{0}\" title: \"{1}\" due_date: \"{2}\" fields_attributes: [ {3} ] }}) {{ table_record {{ id title due_date record_fields {{ name value }} }} }} }}";
-        private const string TableRecordFieldQueryPart = "{{ field_id: \"{0}\", field_value: \"{1}\" }}";
+        private const string CreateTableRecordQuery = "mutation {{ createTableRecord(input: {{ table_id: \"{0}\" title: {1} due_date: {2} fields_attributes: [ {3} ] }}) {{ table_record {{ id title due_date record_fields {{ name value }} }} }} }}";
+        private const string TableRecordFieldQueryPart = "{{ field_id: \"{0}\", field_value: {1} }}";
 
         [Category("Input")]
         [Description("Table ID to have an item created")]
@@ -79,14 +79,13 @@ namespace Capgemini.Pipefy.TableRecord
                 List<string> fields = new List<string>();
                 foreach (var item in customFields)
                 {
-                    string value = item.Value.ToString();
-                    value = value.EscapeQueryValue();
+                    string value = item.Value.ToQueryValue();
                     fields.Add(string.Format(TableRecordFieldQueryPart, item.Key, value));
                 }
                 fieldsString = string.Join(", ", fields);
             }
 
-            return string.Format(CreateTableRecordQuery, tableId, title.EscapeQueryValue(), dueDate.ToPipefyFormat(), fieldsString);
+            return string.Format(CreateTableRecordQuery, tableId, title.ToQueryValue(), dueDate.ToQueryValue(), fieldsString);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)

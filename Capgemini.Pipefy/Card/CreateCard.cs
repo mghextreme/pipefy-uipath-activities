@@ -90,25 +90,22 @@ namespace Capgemini.Pipefy.Card
 
             if (assignees?.Length > 0)
             {
-                var assigneeIds = string.Join(", ", assignees);
-                cardFields.Add(string.Format("assignee_ids: [ {0} ]", assigneeIds));
+                cardFields.Add(string.Format("assignee_ids: {0}", assignees.ToQueryValue()));
             }
 
             if (dueDate != null && dueDate != DateTime.MinValue)
             {
-                cardFields.Add(string.Format("due_date: \"{0}\"", dueDate.ToPipefyFormat()));
+                cardFields.Add(string.Format("due_date: {0}", dueDate.ToQueryValue()));
             }
 
             if (labels?.Length > 0)
             {
-                var labelIds = string.Join(", ", labels);
-                cardFields.Add(string.Format("label_ids: [ {0} ]", labelIds));
+                cardFields.Add(string.Format("label_ids: {0}", labels.ToQueryValue()));
             }
 
             if (parents?.Length > 0)
             {
-                var parentIds = string.Join(", ", parents);
-                cardFields.Add(string.Format("parent_ids: [ {0} ]", parentIds));
+                cardFields.Add(string.Format("parent_ids: {0}", parents.ToQueryValue()));
             }
 
             if (phase > 0)
@@ -118,7 +115,7 @@ namespace Capgemini.Pipefy.Card
 
             if (!string.IsNullOrWhiteSpace(title))
             {
-                cardFields.Add(string.Format("title: \"{0}\"", title.EscapeQueryValue()));
+                cardFields.Add(string.Format("title: {0}", title.ToQueryValue()));
             }
 
             return string.Join(" ", cardFields);
@@ -142,7 +139,7 @@ namespace Capgemini.Pipefy.Card
             foreach (var item in dict)
             {
                 string value = item.Value.ToString();
-                value = value.EscapeQueryValue();
+                value = value.ToQueryValue();
                 cardCustomFields.Add(string.Format(CreateCardFieldQueryPart, item.Key, value));
             }
 

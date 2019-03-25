@@ -11,7 +11,7 @@ namespace Capgemini.Pipefy.TableRecord
     [Description("Updates a TableRecord.")]
     public class UpdateTableRecord : PipefyQueryActivity
     {
-        private const string UpdateTableRecordQuery = @"mutation {{ updateTableRecord(input: {{ id: ""{0}"" {1} {2} {3} }){ table_record { id updated_at } } }";
+        private const string UpdateTableRecordQuery = @"mutation {{ updateTableRecord(input: {{ id: ""{0}"" {1} {2} {3} }}){{ table_record {{ id updated_at }} }} }}";
 
         [Category("Input")]
         [Description("TableRecord ID to be obtained")]
@@ -41,11 +41,11 @@ namespace Capgemini.Pipefy.TableRecord
 
             string titleStr = string.Empty;
             if (!string.IsNullOrWhiteSpace(title))
-                titleStr = string.Format("title: \"{0}\"", title.EscapeQueryValue());
+                titleStr = string.Format("title: {0}", title.ToQueryValue());
 
             string dueDateStr = string.Empty;
             if (dueDate != null && dueDate != DateTime.MinValue)
-                dueDateStr = string.Format("due_date: \"{0}\"", dueDate.ToPipefyFormat());
+                dueDateStr = string.Format("due_date: {0}", dueDate.ToQueryValue());
 
             string statusStr = string.Empty;
             if (!string.IsNullOrWhiteSpace(statusId))

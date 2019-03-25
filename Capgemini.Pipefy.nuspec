@@ -12,5 +12,6 @@
   </metadata>
   <files>
     <file src="Capgemini.Pipefy\bin\Release\net461\Capgemini.Pipefy.dll" target="lib" />
+    <file src="Capgemini.Pipefy\bin\Release\net461\Capgemini.Pipefy.xml" target="lib" />
   </files>
 </package>
