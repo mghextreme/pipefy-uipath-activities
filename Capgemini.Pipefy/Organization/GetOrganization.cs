@@ -6,9 +6,9 @@ using Newtonsoft.Json.Linq;
 namespace Capgemini.Pipefy.Organization
 {
     /// <summary>
-    /// Gets detailed information on a Phase.
+    /// Gets detailed information on an Organization.
     /// </summary>
-    [Description("Gets detailed information on a Phase.")]
+    [Description("Gets detailed information on an Organization.")]
     public class GetOrganization : PipefyQueryActivity
     {
         private const string GetOrganizationQuery = "query {{ phase(id: {0}){{ id name pipes {{ cards_count description id name opened_cards_count public role }} role tables {{ edges {{ node {{ id name public url }} }} }} users {{ email id name }} }} }}";
@@ -30,7 +30,7 @@ namespace Capgemini.Pipefy.Organization
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
         {
-            var org = json["phase"] as JObject;
+            var org = json["organization"] as JObject;
             Organization.Set(context, org);
         }
     }
