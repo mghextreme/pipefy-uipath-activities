@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <None Update="testconfig.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="TestFiles/simple-text.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
