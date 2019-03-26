@@ -29,17 +29,17 @@ namespace Capgemini.Pipefy
             request.ContentType = "application/json";
             request.Method = "POST";
         }
-        
+
         public PipefyQuery(string query) : this()
         {
             SetQuery(query);
         }
-        
+
         public PipefyQuery(string query, string authorization) : this(query)
         {
             SetAuthorization(authorization);
         }
-        
+
         public PipefyQuery(string query, string authorization, string method) : this(query, authorization)
         {
             SetMethod(method);
