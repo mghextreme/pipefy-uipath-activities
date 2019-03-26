@@ -6,34 +6,35 @@ This is a set of Custom Activities for UiPath with the objective of easing the c
 
 ### Attachment
 
-- [UploadAttachment]()
+- [UploadAttachment](docs/uploadAttachment.md)
 
 ### Card
 
-- [CreateCard]()
-- [DeleteCard]()
-- [GetCard]()
-- [MoveCardToPhase]()
-- [UpdateCard]()
-- [UpdateCardField]()
+- [CreateCard](docs/createCard.md)
+- [DeleteCard](docs/deleteCard.md)
+- [GetCard](docs/getCard.md)
+- [MoveCardToPhase](docs/moveCardToPhase.md)
+- [UpdateCard](docs/updateCard.md)
+- [UpdateCardField](docs/updateCardField.md)
 
 ### Organization
 
-- [GetOrganization]()
-- [GetOrganizations]()
+- [GetOrganization](docs/getOrganization.md)
+- [GetOrganizations](docs/getOrganizations.md)
 
 ### Phase
 
-- [GetPhase]()
+- [GetPhase](docs/getPhase.md)
+- [GetPhaseCards](docs/getPhaseCards.md)
 
 ### Pipe
 
-- [GetPipe]()
+- [GetPipe](docs/getPipe.md)
 
 ### Table
 
-- [GetTable]()
-- [GetTables]()
+- [GetTable](docs/getTable.md)
+- [GetTables](docs/getTables.md)
 
 ### TableRecord
 
