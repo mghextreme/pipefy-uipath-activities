@@ -1,6 +1,6 @@
 # Pipefy UiPath Custom Activities
 
-This is a set of Custom Activities for UiPath with the objective of easing the connection with Pipefy actions.
+This is a set of Custom Activities for UIPath with the objective of easing the connection with Pipefy actions.
 
 ## Available actions
 
@@ -54,4 +54,4 @@ This is a set of Custom Activities for UiPath with the objective of easing the c
 
 ---
 
-Developed by @mghextreme and @lpimenta at Capgemini.
+Developed by [@mghextreme](https://github.com/mghextreme/) and [@pimenta128](https://github.com/pimenta138/) at Capgemini.
