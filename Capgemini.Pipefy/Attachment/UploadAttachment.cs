@@ -24,7 +24,14 @@ namespace Capgemini.Pipefy.Attachment
         [Category("Input")]
         [Description("FileInfo of the file to be uploaded")]
         [RequiredArgument]
+        [OverloadGroup("FileInfo input")]
         public InArgument<FileInfo> FileInfo { get; set; }
+
+        [Category("Input")]
+        [Description("Path of the file to be uploaded")]
+        [RequiredArgument]
+        [OverloadGroup("File path input")]
+        public InArgument<string> FilePath { get; set; }
 
         [Category("Output")]
         [Description("Private URL of the uploaded file")]
@@ -64,6 +71,11 @@ namespace Capgemini.Pipefy.Attachment
         {
             long organization = OrganizationID.Get(context);
             fileInfo = FileInfo.Get(context);
+            if (fileInfo == null || string.IsNullOrWhiteSpace(fileInfo.Name))
+            {
+                var filePath = FilePath.Get(context);
+                fileInfo = new FileInfo(Path.GetFullPath(filePath));
+            }
 
             if (!fileInfo.Exists)
                 throw new ArgumentException("The file doesn't exist.");
