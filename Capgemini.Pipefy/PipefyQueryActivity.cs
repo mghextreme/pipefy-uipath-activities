@@ -76,7 +76,8 @@ namespace Capgemini.Pipefy
             var query = new PipefyQuery(queryText, bearer);
 
             int timeout = Timeout.Get(context);
-            query.SetTimeout(timeout);
+            if (timeout > 100)
+                query.SetTimeout(timeout);
             
             string result = query.Execute();
             CheckStatusCode(query.StatusCode);

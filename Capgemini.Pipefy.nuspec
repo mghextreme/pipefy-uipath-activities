@@ -2,19 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Capgemini.Pipefy.Activities</id>
-    <version>0.2.0</version>
+    <version>2.0.0</version>
     <title>Capgemini.Pipefy</title>
     <authors>Capgemini</authors>
     <owners>Capgemini</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>UIPath Cutom Activities for Pipefy developed in Capgemini.</description>
     <copyright>Copyright © 2019</copyright>
-    <iconUrl>https://github.com/mghextreme/pipefy-uipath-activities/raw/master/docs/images/capgemini-pipefy.ico</iconUrl>
+    <iconUrl>https://github.com/mghextreme/pipefy-uipath-activities/raw/master/docs/images/capgemini-pipefy.png</iconUrl>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/mghextreme/pipefy-uipath-activities</projectUrl>
-    <dependencies>
-      <dependency id="Newtonsoft.Json" version="8.0.3" />
-    </dependencies>
+    <projectUrl>https://mghextreme.github.io/pipefy-uipath-activities/</projectUrl>
+    <repository type="git" url="https://github.com/mghextreme/pipefy-uipath-activities" branch="master" />
   </metadata>
   <files>
     <file src="Capgemini.Pipefy\bin\Release\net461\Capgemini.Pipefy.dll" target="lib" />

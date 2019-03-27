@@ -102,6 +102,9 @@ namespace Capgemini.Pipefy
             if (request == null)
                 return;
 
+            if (timeout < 100)
+                timeout = 30000;
+
             request.Timeout = timeout;
         }
 
