@@ -1,4 +1,4 @@
-# CreateTableRecord
+# GetPhase
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/getPhase/)  
 [Implemented Class](../Capgemini.Pipefy/TableRecord/GetPhase.cs)

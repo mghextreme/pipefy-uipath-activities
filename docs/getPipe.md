@@ -1,4 +1,4 @@
-# CreateTableRecord
+# GetPipe
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/getPipe/)  
 [Implemented Class](../Capgemini.Pipefy/TableRecord/GetPipe.cs)

@@ -1,4 +1,4 @@
-# SetTableRecordFieldValue
+# UpdateTableRecord
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/updateTableRecordFieldValue/)  
 [Implemented Class](../Capgemini.Pipefy/TableRecord/UpdateTableRecordFieldValue.cs)
