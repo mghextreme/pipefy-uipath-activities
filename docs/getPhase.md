@@ -1,6 +1,6 @@
 # GetPhase
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getPhase/)  
+[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-phase/phase(id:-phase_id))  
 [Implemented Class](../Capgemini.Pipefy/Phase/GetPhase.cs)
 
 Gets detailed information on a Phase.

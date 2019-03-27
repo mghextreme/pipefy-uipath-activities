@@ -1,6 +1,6 @@
 # GetPhaseCards
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getPhaseCards/)  
+[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-phase/phase(id:-phase_id))  
 [Implemented Class](../Capgemini.Pipefy/Phase/GetPhaseCards.cs)
 
 Gets Cards present on a Phase.
