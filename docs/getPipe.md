@@ -1,7 +1,7 @@
 # CreateTableRecord
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getTableRecord/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/GetTableRecord.cs)
+[Official API](https://api-docs.pipefy.com/reference/mutations/getPipe/)  
+[Implemented Class](../Capgemini.Pipefy/TableRecord/GetPipe.cs)
 
 Gets detailed information about a TableRecord in a Pipefy Table.
 
