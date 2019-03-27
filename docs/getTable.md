@@ -1,6 +1,6 @@
 # GetTable
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getTable/)  
+[Official API](https://pipefydatabase.docs.apiary.io/#reference/0/show-table)  
 [Implemented Class](../Capgemini.Pipefy/Table/GetTable.cs)
 
 Gets detailed information about a Table in Pipefy.

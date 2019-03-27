@@ -1,6 +1,6 @@
 # GetPipe
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getPipe/)  
+[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-pipe/pipe(id:-pipe_id))  
 [Implemented Class](../Capgemini.Pipefy/Pipe/GetPipe.cs)
 
 Gets detailed information about a TableRecord in a Pipefy Table.

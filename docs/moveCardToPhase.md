@@ -1,6 +1,6 @@
 # MoveCardToPhase
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/moveCard/)  
+[Official API](https://api-docs.pipefy.com/reference/mutations/moveCardToPhase/)  
 [Implemented Class](../Capgemini.Pipefy/Card/MoveCardToPhase.cs)
 
 Moves a card to another phase in Pipefy.

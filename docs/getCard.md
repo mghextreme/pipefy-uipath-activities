@@ -1,7 +1,7 @@
 # GetCard
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getCard/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/GetCard.cs)
+[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-card/card(id:-card_id))  
+[Implemented Class](../Capgemini.Pipefy/Card/GetCard.cs)
 
 Gets detaileds information on a Card.
 

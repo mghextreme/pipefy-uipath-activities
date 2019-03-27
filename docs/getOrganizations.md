@@ -1,6 +1,6 @@
 # GetOrganizations
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getOrganizations/)  
+[Official API](https://pipefy.docs.apiary.io/#reference/0/list-organizations)  
 [Implemented Class](../Capgemini.Pipefy/TableRecord/GetOrganizations.cs)
 
 Gets information on multiple Organizations.

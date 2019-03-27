@@ -1,6 +1,6 @@
 # GetTables
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getTables/)  
+[Official API](https://pipefydatabase.docs.apiary.io/#reference/0/list-tables/tables(ids:-[table_ids]))  
 [Implemented Class](../Capgemini.Pipefy/Table/GetTables.cs)
 
 Gets information about multiple Tables in Pipefy.

@@ -1,6 +1,6 @@
 # GetOrganization
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getOrganization/)  
+[Official API](https://pipefy.docs.apiary.io/#reference/0/show-organization/organization(id:-organization_id))  
 [Implemented Class](../Capgemini.Pipefy/TableRecord/GetOrganization.cs)
 
 Gets detailed information on an Organization.
