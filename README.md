@@ -54,4 +54,4 @@ This is a set of Custom Activities for UIPath with the objective of easing the c
 
 ---
 
-Developed by [@mghextreme](https://github.com/mghextreme/) and [@pimenta128](https://github.com/pimenta138/) at Capgemini.
+Developed by Matias Henschel([@mghextreme](https://github.com/mghextreme/)) and Lucas Pimenta([@pimenta138](https://github.com/pimenta138/)) at Capgemini.
