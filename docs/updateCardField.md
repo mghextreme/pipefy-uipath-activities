@@ -1,7 +1,7 @@
 # UpdateCardField
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/updateCardField/)  
-[Implemented Class](../Capgemini.Pipefy/Card/UpdateTableRecordFieldValue.cs)
+[Implemented Class](../Capgemini.Pipefy/TableRecord/UpdateTableRecordFieldValue.cs)
 
 Updates a field in a card in Pipefy.
 
