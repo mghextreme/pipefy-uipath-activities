@@ -104,5 +104,32 @@ namespace Capgemini.Pipefy
 
             request.Timeout = timeout;
         }
+
+        /// <summary>
+        /// Parses the requests resulting string and checks for errors
+        /// </summary>
+        /// <param name="result">The requests result content</param>
+        /// <returns>Parsed JObject</returns>
+        public static JObject ParseJson(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                throw new PipefyException("The response received was empty.");
+
+            var json = JObject.Parse(result);
+
+            JArray jaErrors = json["errors"] as JArray;
+            if (jaErrors != null)
+            {
+                if (jaErrors.Count > 0)
+                {
+                    string errorMessage = jaErrors.Count + " error(s) found:";
+                    foreach (var error in jaErrors)
+                        errorMessage += "\n- " + error.Value<string>("message");
+                    throw new PipefyException(errorMessage);
+                }
+            }
+
+            return json;
+        }
     }
 }

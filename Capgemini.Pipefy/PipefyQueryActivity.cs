@@ -81,7 +81,7 @@ namespace Capgemini.Pipefy
             string result = query.Execute();
             CheckStatusCode(query.StatusCode);
 
-            JObject json = ParseJson(result);
+            JObject json = PipefyQuery.ParseJson(result);
             ParseResult(context, json["data"] as JObject);
         }
 
@@ -101,33 +101,6 @@ namespace Capgemini.Pipefy
                 statusCode != HttpStatusCode.Created &&
                 statusCode != HttpStatusCode.Accepted)
                 throw new PipefyException("Web request returned Status Code " + statusCode);
-        }
-
-        /// <summary>
-        /// Parses the requests resulting string and checks for errors
-        /// </summary>
-        /// <param name="result">The requests result content</param>
-        /// <returns>Parsed JObject</returns>
-        protected JObject ParseJson(string result)
-        {
-            if (string.IsNullOrWhiteSpace(result))
-                throw new PipefyException("The response received was empty.");
-
-            var json = JObject.Parse(result);
-
-            JArray jaErrors = json["errors"] as JArray;
-            if (jaErrors != null)
-            {
-                if (jaErrors.Count > 0)
-                {
-                    string errorMessage = jaErrors.Count + " error(s) found:";
-                    foreach (var error in jaErrors)
-                        errorMessage += "\n- " + error.Value<string>("message");
-                    throw new PipefyException(errorMessage);
-                }
-            }
-
-            return json;
         }
 
         /// <summary>

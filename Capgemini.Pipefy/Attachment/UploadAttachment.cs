@@ -57,7 +57,7 @@ namespace Capgemini.Pipefy.Attachment
             string result = query.Execute();
             CheckStatusCode(query.StatusCode);
 
-            JObject json = ParseJson(result);
+            JObject json = PipefyQuery.ParseJson(result);
             ParseResult(context, json["data"] as JObject);
 
             // Upload File
