@@ -1,7 +1,7 @@
 # CreateCard
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/createCard/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/CreateCard.cs)
+[Implemented Class](../Capgemini.Pipefy/Card/CreateCard.cs)
 
 Creates a card in Pipefy.
 
@@ -21,13 +21,19 @@ ID of the users to be assigned to the card
 
 The card due date
 
+> Default: one month from current datetime
+
 ### &lt;In&gt; DictionaryFields : Dictionary<string, object>
 
-Custom fields for the card (Dictionary)
+Custom fields for the card (Dictionary). Each key represents one field. Values are converted to string.
+
+> You can't fill DictionaryFields and DataRowFields at the same time
 
 ### &lt;In&gt; DataRowFields : DataRow
 
 Custom fields for the card (DataRow)
+
+> You can't fill DictionaryFields and DataRowFields at the same time
 
 ### &lt;In&gt; LabelIDs : long[]
 

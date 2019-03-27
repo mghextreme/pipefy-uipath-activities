@@ -1,7 +1,7 @@
 # GetPhase
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/getPhase/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/GetPhase.cs)
+[Implemented Class](../Capgemini.Pipefy/Phase/GetPhase.cs)
 
 Gets detailed information on a Phase.
 

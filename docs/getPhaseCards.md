@@ -1,7 +1,7 @@
 # GetPhaseCards
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/getPhaseCards/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/GetPhaseCards.cs)
+[Implemented Class](../Capgemini.Pipefy/Phase/GetPhaseCards.cs)
 
 Gets Cards present on a Phase.
 

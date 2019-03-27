@@ -1,7 +1,7 @@
 # Me
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/getMe/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/Me.cs)
+[Implemented Class](../Capgemini.Pipefy/User/Me.cs)
 
 Gets detailed information about a TableRecord in a Pipefy Table.
 

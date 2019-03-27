@@ -1,7 +1,7 @@
 # MoveCardToPhase
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/moveCard/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/MoveCardToPhase.cs)
+[Implemented Class](../Capgemini.Pipefy/Card/MoveCardToPhase.cs)
 
 Moves a card to another phase in Pipefy.
 

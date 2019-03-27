@@ -1,7 +1,7 @@
 # GetTable
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/getTable/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/GetTable.cs)
+[Implemented Class](../Capgemini.Pipefy/Table/GetTable.cs)
 
 Gets detailed information about a Table in Pipefy.
 
