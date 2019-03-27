@@ -13,11 +13,6 @@ The Table Record ID which should be deleted.
 
 You can find this info from the link when accessing it through the web.
 
-
-### &lt;Out&gt; TableRecordID : string
-
-The ID of the deleted TableRecord.
-
 ## Inherited Arguments
 
 ### &lt;In&gt; Bearer : string
