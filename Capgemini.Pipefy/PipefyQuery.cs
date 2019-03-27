@@ -15,12 +15,19 @@ namespace Capgemini.Pipefy
 
         private WebRequest request;
 
+        /// <summary>
+        /// The query to be executed
+        /// </summary>
         public string Query { get; protected set; }
 
+        /// <summary>
+        /// The resulting StatusCode of the request
+        /// </summary>
         public HttpStatusCode StatusCode { get; protected set; }
 
-        public string Method { get; protected set; }
-
+        /// <summary>
+        /// Instances a PipefyQuery with no Query or Authorization token
+        /// </summary>
         public PipefyQuery()
         {
             request = WebRequest.Create(PipefyApiUrl);
@@ -30,21 +37,26 @@ namespace Capgemini.Pipefy
             request.Method = "POST";
         }
 
+        /// <summary>
+        /// Instances a PipefyQuery with no Authorization token
+        /// </summary>
         public PipefyQuery(string query) : this()
         {
             SetQuery(query);
         }
 
+        /// <summary>
+        /// Instances a PipefyQuery
+        /// </summary>
         public PipefyQuery(string query, string authorization) : this(query)
         {
             SetAuthorization(authorization);
         }
 
-        public PipefyQuery(string query, string authorization, string method) : this(query, authorization)
-        {
-            SetMethod(method);
-        }
-
+        /// <summary>
+        /// Executes the query in Pipefy API
+        /// </summary>
+        /// <returns>The string returned by the API</returns>
         public string Execute()
         {
             byte[] bytes = Encoding.UTF8.GetBytes(Query);
@@ -58,6 +70,10 @@ namespace Capgemini.Pipefy
             return sr.ReadToEnd();
         }
 
+        /// <summary>
+        /// Sets the Pipefy Bearer Authorization token. No need to add the "Bearer" before the token
+        /// </summary>
+        /// <param name="bearer">The Authorization token</param>
         public void SetAuthorization(string bearer)
         {
             if (request == null)
@@ -66,6 +82,10 @@ namespace Capgemini.Pipefy
             request.Headers.Add("Authorization", "Bearer " + bearer);
         }
 
+        /// <summary>
+        /// Sets the query to be executed. May be either query or mutation
+        /// </summary>
+        /// <param name="query">The query to be executed</param>
         public void SetQuery(string query)
         {
             var jObj = new JObject();
@@ -73,24 +93,10 @@ namespace Capgemini.Pipefy
             Query = jObj.ToString();
         }
 
-        private void SetMethod(string method)
-        {
-            if (request == null)
-                return;
-
-            method = method.ToUpper();
-            switch (method)
-            {
-                case "GET":
-                case "POST":
-                case "PUT":
-                case "OPTIONS":
-                    request.Method = method;
-                    break;
-            }
-            throw new ArgumentException(string.Format("The method {0} is unsupported", method));
-        }
-
+        /// <summary>
+        /// Sets the timeout (in milisseconds) for the request. Defaults to 120000
+        /// </summary>
+        /// <param name="timeout">The timeout (in ms)</param>
         public void SetTimeout(int timeout)
         {
             if (request == null)
