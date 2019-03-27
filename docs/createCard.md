@@ -53,14 +53,6 @@ ID of the Phase in which the Card should be placed
 
 ID of the Pipe in which the Card should be created
 
-### &lt;In&gt; PipeID : string
-
-ID of the Pipe in which the Card should be created
-
-### &lt;In&gt; Title : string
-
-The title of the Card
-
 ### &lt;Out&gt; Card : JObject
 
 The created Card summary (JObject)
