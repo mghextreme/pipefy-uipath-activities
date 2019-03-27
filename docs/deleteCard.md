@@ -1,7 +1,7 @@
 # DeleteCard
 
 [Official API](https://api-docs.pipefy.com/reference/mutations/deleteCard/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/DeleteCard.cs)
+[Implemented Class](../Capgemini.Pipefy/Card/DeleteCard.cs)
 
 Deletes a card in Pipefy.
 
