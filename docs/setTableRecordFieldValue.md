@@ -11,7 +11,7 @@ Sets a record field value in a Table.
 
 The ID of the TableRecord to be updated.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; FieldName : string
 
@@ -22,6 +22,11 @@ You can find this name by accessing the edit panel of the table.
 ### &lt;In&gt; Value : object
 
 The value to be placed at the field.
+
+> *Important!* When setting fields which accept multiple values, such as attachments, watch out for:
+>
+> - Make sure to set the field as an array object
+> - Because you're setting the field, any value present in the list will be removed
 
 ## Inherited Arguments
 

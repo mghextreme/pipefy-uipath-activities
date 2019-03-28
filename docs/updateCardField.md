@@ -9,17 +9,22 @@ Updates a field in a card in Pipefy.
 
 ### &lt;In&gt; CardID : long
 
-ID of the Card to be updated
+ID of the Card to be updated.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; FieldID : string
 
-ID of the field to be updated
+ID of the field to be updated.
 
 ### &lt;In&gt; Value : object
 
-Value to be placed at the field
+Value to be placed at the field.
+
+> *Important!* When setting fields which accept multiple values, such as attachments, watch out for:
+>
+> - Make sure to set the field as an array object
+> - Because you're setting the field, any value present in the list will be removed
 
 ## Inherited Arguments
 

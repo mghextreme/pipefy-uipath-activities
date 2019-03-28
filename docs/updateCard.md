@@ -11,23 +11,23 @@ Updates a card in Pipefy.
 
 The ID of the card to be updated.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; AssigneeIDs : long[]
 
-ID of the users to be assigned to the card
+ID of the users to be assigned to the card.
 
 ### &lt;In&gt; DueDate : DateTime
 
-The card due date
+The card due date.
 
 ### &lt;In&gt; LabelIDs : long[]
 
-ID of the labels to be set to the card
+ID of the labels to be set to the card.
 
 ### &lt;In&gt; Title : string
 
-The title of the Card
+The title of the Card.
 
 ## Inherited Arguments
 

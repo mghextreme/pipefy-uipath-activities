@@ -9,13 +9,13 @@ Moves a card to another phase in Pipefy.
 
 ### &lt;In&gt; CardID : long
 
-ID of the Card to be moved
+ID of the Card to be moved.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; PhaseID : long
 
-ID of the destination Phase
+ID of the destination Phase.
 
 ## Inherited Arguments
 

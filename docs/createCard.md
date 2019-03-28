@@ -28,14 +28,14 @@ The card due date.
 Custom fields for the card (Dictionary).
 Each key represents one field. Values are converted to string.
 
-> You can't fill DictionaryFields and DataRowFields at the same time
+> You can't fill DictionaryFields and DataRowFields at the same time.
 
 ### &lt;In&gt; DataRowFields : DataRow
 
 Custom fields for the card (DataRow).
 Each columns represents one field. Values are converted to string.
 
-> You can't fill DictionaryFields and DataRowFields at the same time
+> You can't fill DictionaryFields and DataRowFields at the same time.
 
 ### &lt;In&gt; LabelIDs : long[]
 

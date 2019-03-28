@@ -1,29 +1,37 @@
 # UploadAttachment
 
-[Official API](https://api-docs.pipefy.com/reference/objects/Attachment/))  
+[Official API](https://developers.pipefy.com/v1.0/docs/how-to-upload-attachments-and-attach-to-a-card-record)  
 [Implemented Class](../Capgemini.Pipefy/Attachment/UploadAttachment.cs)
 
 Uploads an attachment to Pipefy.
+
+> *Important!* This activity just uploads the file and doesn't attaches it to any object. To attach it, check the guides on updating [Cards](updateCardField.md) and [TableRecord](setTableRecordFieldValue.md) fields.
 
 ## Arguments
 
 ### &lt;In&gt; OrganizationID : long
 
-ID of the Organization to place the file
+ID of the Organization to place the file.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; FileInfo : FileInfo
 
-FileInfo of the file to be uploaded
+FileInfo of the file to be uploaded.
+
+> You can't fill FileInfo and FilePath at the same time.
 
 ### &lt;In&gt; FilePath : string
 
-Path of the file to be uploaded
+Path of the file to be uploaded.
+
+> You can't fill FileInfo and FilePath at the same time.
 
 ### &lt;Out&gt; FileUrl : string
 
-Private URL of the uploaded file
+Private URL of the uploaded file.
+
+> *Important!* This is a single string, but when setting fields in either TableRecords or Cards, the attachment type receives multiple items, so you need to place this string inside a string array.
 
 ## Inherited Arguments
 

@@ -17,20 +17,20 @@ You can find this info from the API or from the link when accessing it through t
 
 The Title for the TableRecord.
 
-> Default: first field value
+> Default: first field value.
 
 ### &lt;In&gt; DueDate : DateTime
 
 The Due Date for the TableRecord.
 
-> Default: one month from current DateTime
+> Default: one month from current DateTime.
 
 ### &lt;In&gt; DictionaryFields : Dictionary<string, object>
 
 The fields value to be added, in Dictionary form.
 Each key represents one field. Values are converted to string.
 
-> You can't fill DictionaryFields and DataRowFields at the same time
+> You can't fill DictionaryFields and DataRowFields at the same time.
 
 ### &lt;In&gt; DataRowFields : DataRow
 

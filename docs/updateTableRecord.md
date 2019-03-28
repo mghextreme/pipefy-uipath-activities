@@ -1,7 +1,7 @@
 # UpdateTableRecord
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/updateTableRecordFieldValue/)  
-[Implemented Class](../Capgemini.Pipefy/TableRecord/UpdateTableRecordFieldValue.cs)
+[Official API](https://api-docs.pipefy.com/reference/mutations/updateTableRecord/)  
+[Implemented Class](../Capgemini.Pipefy/TableRecord/UpdateTableRecord.cs)
 
 Updates a TableRecord in a Pipefy Table.
 
@@ -11,11 +11,11 @@ Updates a TableRecord in a Pipefy Table.
 
 The ID of the TableRecord to obtained.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; Title : string
 
-The new title for the TableRecord
+The new title for the TableRecord.
 
 ### &lt;In&gt; DueDate : DateTime
 
