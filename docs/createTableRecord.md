@@ -11,7 +11,7 @@ Creates a record in a Table.
 
 The ID of the table in which the record should be added.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; Title : string
 
@@ -23,7 +23,7 @@ The Title for the TableRecord.
 
 The Due Date for the TableRecord.
 
-> Default: one month from current datetime
+> Default: one month from current DateTime
 
 ### &lt;In&gt; DictionaryFields : Dictionary<string, object>
 

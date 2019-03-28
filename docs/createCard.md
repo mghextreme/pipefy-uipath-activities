@@ -11,55 +11,78 @@ Creates a card in Pipefy.
 
 The ID of the table in which the record should be added.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;In&gt; AssigneeIDs : long[]
 
-ID of the users to be assigned to the card
+ID of the users to be assigned to the card.
 
 ### &lt;In&gt; DueDate : DateTime
 
-The card due date
+The card due date.
 
-> Default: one month from current datetime
+> Default: one month from current DateTime.
 
 ### &lt;In&gt; DictionaryFields : Dictionary<string, object>
 
-Custom fields for the card (Dictionary). Each key represents one field. Values are converted to string.
+Custom fields for the card (Dictionary).
+Each key represents one field. Values are converted to string.
 
 > You can't fill DictionaryFields and DataRowFields at the same time
 
 ### &lt;In&gt; DataRowFields : DataRow
 
-Custom fields for the card (DataRow)
+Custom fields for the card (DataRow).
+Each columns represents one field. Values are converted to string.
 
 > You can't fill DictionaryFields and DataRowFields at the same time
 
 ### &lt;In&gt; LabelIDs : long[]
 
-ID of the labels to be added to the card
+ID of the labels to be added to the card.
 
 ### &lt;In&gt; ParentsIDs : long[]
 
-ID of the parent Cards
-
->Default: -1
+ID of the parent Cards.
 
 ### &lt;In&gt; PhaseID : long
 
-ID of the Phase in which the Card should be placed
+ID of the Phase in which the Card should be placed.
 
 ### &lt;In&gt; PipeID : string
 
-ID of the Pipe in which the Card should be created
+ID of the Pipe in which the Card should be created.
 
 ### &lt;Out&gt; Card : JObject
 
-The created Card summary (JObject)
+The created Card summary (JObject).
+
+Example object:
+
+```json
+{
+    "createdAt": "2019-03-28T16:08:07-03:00",
+    "createdBy": {
+        "email": "your.email@capgemini.com",
+        "id": "12345",
+        "name": "Your Name"
+    },
+    "current_phase": {
+        "id": "1234567",
+        "name": "Inbox"
+    },
+    "due_date": "2019-04-10T15:00:00-03:00",
+    "expiration": {
+        "shouldExpireAt": "2019-06-21T15:00:00-03:00"
+    },
+    "id": "12345678",
+    "url": "http://app.pipefy.com/pipes/123456#cards/12345678"
+}
+```
 
 ### &lt;Out&gt; CardID : long
 
-ID of the created Card
+ID of the created Card.
 
 ## Inherited Arguments
 

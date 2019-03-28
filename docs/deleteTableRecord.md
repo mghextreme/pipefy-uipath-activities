@@ -11,7 +11,7 @@ Deletes a TableRecord in a Pipefy Table.
 
 The Table Record ID which should be deleted.
 
-You can find this info from the link when accessing it through the web.
+You can find this info from the API or from the link when accessing it through the web.
 
 ## Inherited Arguments
 

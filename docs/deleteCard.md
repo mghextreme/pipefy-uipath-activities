@@ -9,7 +9,9 @@ Deletes a card in Pipefy.
 
 ### &lt;In&gt; CardID : string
 
-ID of the Card to be deleted
+ID of the Card to be deleted.
+
+You can find this info from the API or from the link when accessing it through the web.
 
 ## Inherited Arguments
 
