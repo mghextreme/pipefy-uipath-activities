@@ -1,9 +1,9 @@
 # GetCard
 
-[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-card/card(id:-card_id))  
+[Official API](https://api-docs.pipefy.com/reference/queries/#card)  
 [Implemented Class](../Capgemini.Pipefy/Card/GetCard.cs)
 
-Gets detaileds information on a Card.
+Gets detailed information on a Card.
 
 ## Arguments
 
@@ -11,11 +11,109 @@ Gets detaileds information on a Card.
 
 ID of the Card to be obtained.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;Out&gt; Card : JObject
 
 Card obtained (JObject).
+
+Example object:
+
+```json
+{
+    "age": 72000,
+    "assignees": [{
+        "email": "your.email@company.com",
+        "id": "12345",
+        "name": "Your Name"
+    }],
+    "checklist_items_checked_count": 1,
+    "checklist_items_count": 4,
+    "comments_count": 3,
+    "created_at": "2019-03-22T11:26:35-03:00",
+    "created_by": {
+        "email": "your.email@company.com",
+        "id": "12345",
+        "name": "Your Name"
+    },
+    "current_phase": {
+        "done": false,
+        "id": "1234567",
+        "name": "Doing"
+    },
+    "current_phase_age": 36000,
+    "done": false,
+    "due_date": "2019-04-02T11:30:00-03:00",
+    "expiration": {
+        "expiredAt": null,
+        "shouldExpireAt": "2019-06-20T11:30:00-03:00"
+    },
+    "expired": false,
+    "fields": [{
+        "array_value": [
+            "path/to/my-file.txt"
+        ],
+        "datetime_value": null,
+        "field": {
+            "id": "attachment",
+            "type": "attachment"
+        },
+        "filled_at": "2019-03-25T11:08:45-03:00",
+        "name": "Attachment",
+        "value": "[\"path/to/my-file.txt\"]"
+    }, {
+        "array_value": null,
+        "datetime_value": null,
+        "field": {
+            "id": "simple_information",
+            "type": "short_text"
+        },
+        "filled_at": "2019-03-22T11:26:35-03:00",
+        "name": "Simple information",
+        "value": "Code 150103"
+    }],
+    "finished_at": null,
+    "id": "12345678",
+    "labels": [{
+        "name": "Pretty",
+        "id": 917441
+    }],
+    "late": false,
+    "phases_history": [{
+        "duration": 0,
+        "firstTimeIn": "2019-03-22T14:26:35+00:00",
+        "lastTimeOut": "2019-03-22T14:26:35+00:00",
+        "phase": {
+            "id": "1234565",
+            "name": "Start form"
+        }
+    }, {
+        "duration": 266033,
+        "firstTimeIn": "2019-03-22T14:26:35+00:00",
+        "lastTimeOut": "2019-03-25T16:20:29+00:00",
+        "phase": {
+            "id": "1234566",
+            "name": "Inbox"
+        }
+    }, {
+        "duration": 272028,
+        "firstTimeIn": "2019-03-25T16:20:29+00:00",
+        "lastTimeOut": null,
+        "phase": {
+            "id": "1234567",
+            "name": "Doing"
+        }
+    }],
+    "pipe": {
+        "id": "123456",
+        "name": "My Pipe Name"
+    },
+    "started_current_phase_at": "2019-03-25T13:20:29-03:00",
+    "title": "My awesome card title",
+    "updated_at": "2019-03-26T08:13:41-03:00",
+    "url": "http://app.pipefy.com/pipes/123456#cards/12345678"
+}
+```
 
 ## Inherited Arguments
 

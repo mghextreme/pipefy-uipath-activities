@@ -1,15 +1,29 @@
 # Me
 
-[Official API](https://pipefy.docs.apiary.io/#reference/0/me/get-me)  
+[Official API](https://api-docs.pipefy.com/reference/queries/#me)  
 [Implemented Class](../Capgemini.Pipefy/User/Me.cs)
 
-Gets detailed information about a TableRecord in a Pipefy Table.
+Gets detailed information about the User logged in through the token.
 
 ## Arguments
 
 ### &lt;Out&gt; User : JObject
 
-User obtained (JObject)
+User obtained (JObject).
+
+Example object:
+
+```json
+{
+    "avatarUrl": "https://url/to/image.jpg",
+    "email": "your.email@company.com",
+    "id": "12345",
+    "locale": "en-US",
+    "name": "Your Name",
+    "timeZone": "America/New_York",
+    "username": "your_user"
+}
+```
 
 ## Inherited Arguments
 

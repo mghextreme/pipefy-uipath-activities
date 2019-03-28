@@ -11,11 +11,23 @@ Gets information on multiple Organizations.
 
 IDs of the Organizations to be obtained
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web
+
+> If this field is left empty, it returns all the organizations of which the user is a member from.
 
 ### &lt;Out&gt; Organizations : JObject[]
 
-Organizations obtained (JObject).
+The organizations obtained (JObject[]).
+
+Example of each object:
+
+```json
+{
+    "id": "12345",
+    "name": "Nice Org",
+    "role": "normal"
+}
+```
 
 ## Inherited Arguments
 

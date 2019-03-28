@@ -63,7 +63,7 @@ Example object:
 {
     "createdAt": "2019-03-28T16:08:07-03:00",
     "createdBy": {
-        "email": "your.email@capgemini.com",
+        "email": "your.email@company.com",
         "id": "12345",
         "name": "Your Name"
     },

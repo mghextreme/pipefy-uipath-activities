@@ -9,13 +9,47 @@ Gets detailed information on a Phase.
 
 ### &lt;In&gt; PhaseID : long
 
-ID of the Phase to be obtained
+ID of the Phase to be obtained.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;Out&gt; Phase : JObject
 
-Phase obtained (JObject).
+The phase obtained (JObject).
+
+Example object:
+
+```json
+{
+    "cards_can_be_moved_to_phases": [
+        {
+            "done": false,
+            "id": "1234565",
+            "name": "Inbox"
+        },
+        {
+            "done": true,
+            "id": "1234567",
+            "name": "Done"
+        }
+    ],
+    "cards_count": 8,
+    "description": "This is a nice phase. Right in the middle of the pipe.",
+    "done": false,
+    "expiredCardsCount": 0,
+    "fields": [{
+        "description": "A simple information field for some codes",
+        "id": "simple_information",
+        "is_multiple": false,
+        "label": "Simple information",
+        "required": false,
+        "type": "short_text"
+    }],
+    "id": "12345678",
+    "lateCardsCount": 2,
+    "name": "Doing"
+}
+```
 
 ## Inherited Arguments
 
