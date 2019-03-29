@@ -74,7 +74,7 @@ namespace Capgemini.Pipefy.TableRecord
         public static string BuildQuery(string tableId, string title, Dictionary<string, object> customFields, DateTime dueDate)
         {
             string fieldsString = string.Empty;
-            if (customFields.Count > 0)
+            if (customFields?.Count > 0)
             {
                 List<string> fields = new List<string>();
                 foreach (var item in customFields)

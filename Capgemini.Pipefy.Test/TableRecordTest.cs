@@ -15,7 +15,6 @@ namespace Capgemini.Pipefy.Test
     {
         private static TestConfiguration testConfig;
         private static Helper.Table simpleTable, customFieldsTable;
-        private static Dictionary<string, string> customFields;
 
         [ClassInitialize]
         public static void TableRecordTestInitialize(TestContext context)
@@ -44,63 +43,103 @@ namespace Capgemini.Pipefy.Test
         [TestMethod]
         public void TableRecord_CreateByDictionaryAndDelete_Success()
         {
-            var testConfig = TestConfiguration.Instance;
             var title = "Table Record by Dict - " + DateTime.Now.ToShortDateString();
+            var dueDate = DateTime.Now.AddDays(10).Date;
 
             // Create
 
             var dict = testConfig.GetDefaultActivityArguments();
+            var dictValues = customFieldsTable.GenerateRandomRecordDictionary();
             dict["TableID"] = customFieldsTable.Id;
             dict["Title"] = title;
-            dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            dict["DictionaryFields"] = customFieldsTable.GenerateRandomRecordDictionary();
+            dict["DueDate"] = dueDate;
+            dict["DictionaryFields"] = dictValues;
 
             var act = new CreateTableRecord();
 
             var result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.IsTrue((long)result["TableRecordID"] > 0);
+            var recordId = (long)result["TableRecordID"];
+            Assert.IsTrue(recordId > 0);
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
+
+            var act2 = new GetTableRecord();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var tableRecord = (JObject)result["TableRecord"];
+
+            Assert.AreEqual(title, tableRecord.Value<string>("title"));
+            Assert.AreEqual(dueDate, tableRecord.Value<DateTime>("due_date"));
+
+            var valuesJArray = tableRecord["record_fields"] as JArray;
+            var valuesDict = Helper.TableRecord.FieldsJArrayToJObjectDictionary(valuesJArray);
+            Assert.AreEqual(dictValues["code"].ToString(), valuesDict["code"].Value<string>("value"));
+            Assert.AreEqual(dictValues["description"], valuesDict["description"].Value<string>("value"));
 
             // Delete
 
             dict = testConfig.GetDefaultActivityArguments();
-            dict["TableRecordID"] = result["TableRecordID"];
+            dict["TableRecordID"] = recordId;
 
-            var act2 = new DeleteTableRecord();
-            result = WorkflowInvoker.Invoke(act2, dict);
+            var act3 = new DeleteTableRecord();
+            result = WorkflowInvoker.Invoke(act3, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
+            Assert.AreEqual(act3.SuccessMessage, result["Status"].ToString());
         }
 
         [TestMethod]
         public void TableRecord_CreateByDataRowAndDelete_Success()
         {
-            var testConfig = TestConfiguration.Instance;
             var title = "Table Record by DataRow - " + DateTime.Now.ToShortDateString();
+            var dueDate = DateTime.Now.AddDays(10).Date;
 
             // Create
 
             var dict = testConfig.GetDefaultActivityArguments();
+            var dataRowValues = customFieldsTable.GenerateRandomRecordDataRow();
             dict["TableID"] = customFieldsTable.Id;
             dict["Title"] = title;
-            dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            dict["DataRowFields"] = customFieldsTable.GenerateRandomRecordDataRow();
+            dict["DueDate"] = dueDate;
+            dict["DataRowFields"] = dataRowValues;
 
             var act = new CreateTableRecord();
 
             var result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.IsTrue((long)result["TableRecordID"] > 0);
+            var recordId = (long)result["TableRecordID"];
+            Assert.IsTrue(recordId > 0);
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
+
+            var act2 = new GetTableRecord();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var tableRecord = (JObject)result["TableRecord"];
+
+            Assert.AreEqual(title, tableRecord.Value<string>("title"));
+            Assert.AreEqual(dueDate, tableRecord.Value<DateTime>("due_date"));
+
+            var valuesJArray = tableRecord["record_fields"] as JArray;
+            var valuesDict = Helper.TableRecord.FieldsJArrayToJObjectDictionary(valuesJArray);
+            Assert.AreEqual(dataRowValues["code"].ToString(), valuesDict["code"].Value<string>("value"));
+            Assert.AreEqual(dataRowValues["description"], valuesDict["description"].Value<string>("value"));
 
             // Delete
 
-            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableRecordID"] = result["TableRecordID"];
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
 
-            var act2 = new DeleteTableRecord();
-            result = WorkflowInvoker.Invoke(act2, dict);
+            var act3 = new DeleteTableRecord();
+            result = WorkflowInvoker.Invoke(act3, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
+            Assert.AreEqual(act3.SuccessMessage, result["Status"].ToString());
         }
 
         [TestMethod]
