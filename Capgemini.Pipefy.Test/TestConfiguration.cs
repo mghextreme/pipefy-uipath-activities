@@ -37,8 +37,11 @@ namespace Capgemini.Pipefy.Test
             }
         }
 
+        private Dictionary<string, object> customConfig;
+
         public TestConfiguration(string configFile)
         {
+            customConfig = new Dictionary<string, object>();
             configurationFile = Path.GetFullPath(configFile);
         }
 
@@ -63,11 +66,31 @@ namespace Capgemini.Pipefy.Test
             }
         }
 
+        public string GetBearer()
+        {
+            if (Configuration == null)
+                return string.Empty;
+
+            return _configuration.Value<string>("bearer");
+        }
+
+        public void SetCustomConfig(string key, object value)
+        {
+            customConfig.Add(key, value);
+        }
+
+        public object GetCustomConfig(string key)
+        {
+            if (customConfig.ContainsKey(key))
+                return customConfig[key];
+            return null;
+        }
+
         public Dictionary<string, object> GetDefaultActivityArguments()
         {
             var dict = new Dictionary<string, object>();
-            dict["Bearer"] = Configuration["api"].Value<string>("bearer");
-            dict["Timeout"] = Configuration["api"].Value<int>("timeout");
+            dict["Bearer"] = Configuration.Value<string>("bearer");
+            dict["Timeout"] = Configuration.Value<int>("timeout");
             return dict;
         }
     }

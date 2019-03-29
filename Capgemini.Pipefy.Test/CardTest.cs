@@ -10,15 +10,28 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class CardTest
     {
+        private static TestConfiguration testConfig;
+
+        [ClassInitialize]
+        public static void CardTestInitialize(TestContext context)
+        {
+            testConfig = TestConfiguration.Instance;
+        }
+
+        [ClassCleanup]
+        public static void CardTestCleanup()
+        {
+
+        }
+
+        [Ignore]
         [TestMethod]
         public void Card_CreateAndDelete_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-
             // Create
 
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["PipeID"] = config["pipe"].Value<string>("id");
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PipeID"] = testConfig.Configuration.Value<string>("id");
             dict["Title"] = "Test Card " + DateTime.Now.ToShortDateString();
             dict["DueDate"] = DateTime.Now.AddDays(6);
 
@@ -31,7 +44,7 @@ namespace Capgemini.Pipefy.Test
 
             // Delete
 
-            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
+            dict = testConfig.GetDefaultActivityArguments();
             dict["CardID"] = result["CardID"];
 
             var act2 = new DeleteCard();

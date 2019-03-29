@@ -10,6 +10,7 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class PipeTest
     {
+        [Ignore]
         [TestMethod]
         public void Pipe_GetSingle_Success()
         {

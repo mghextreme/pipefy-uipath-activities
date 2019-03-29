@@ -11,6 +11,7 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class PhaseTest
     {
+        [Ignore]
         [TestMethod]
         public void Phase_GetSingle_Success()
         {

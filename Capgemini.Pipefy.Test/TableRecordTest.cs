@@ -2,6 +2,7 @@ using System;
 using System.Activities;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Capgemini.Pipefy.Table;
 using Capgemini.Pipefy.TableRecord;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,6 +13,70 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class TableRecordTest
     {
+        private static TestConfiguration testConfig;
+        private static string simpleTableId, customFieldsTableId;
+
+        [ClassInitialize]
+        public static void TableRecordTestInitialize(TestContext context)
+        {
+            testConfig = TestConfiguration.Instance;
+            var bearer = testConfig.GetBearer();
+            var orgId = testConfig.GetCustomConfig("OrganizationID");
+
+            var createTableQuery = "mutation {{ createTable(input: {{ organization_id: {0} name: {1} public: true }}){{ table {{ id name url }} }} }}";
+
+            // Create simple table
+
+            var createSimpleTable = string.Format(createTableQuery, orgId, "SimpleTable".ToQueryValue());
+            var query = new PipefyQuery(createSimpleTable, bearer);
+            var result = query.Execute();
+            var resultObj = PipefyQuery.ParseJson(result);
+
+            var table = resultObj["data"]["createTable"]["table"];
+            simpleTableId = table.Value<string>("id");
+
+            // Create table with custom fields
+
+            var createCustomFieldsTable = string.Format(createTableQuery, orgId, "CustomFieldsTable".ToQueryValue());
+            query = new PipefyQuery(createCustomFieldsTable, bearer);
+            result = query.Execute();
+            resultObj = PipefyQuery.ParseJson(result);
+
+            table = resultObj["data"]["createTable"]["table"];
+            customFieldsTableId = table.Value<string>("id");
+        }
+
+        [ClassCleanup]
+        public static void TableRecordTestCleanup()
+        {
+            var bearer = testConfig.GetBearer();
+
+            // Delete tables after tests
+
+            var deleteTableQuery = "mutation {{ deleteTable(input: {{ id: {0} }}){{ success }} }}";
+
+            if (!string.IsNullOrWhiteSpace(simpleTableId))
+            {
+                var deleteSimpleTableQuery = string.Format(deleteTableQuery, simpleTableId);
+                var query = new PipefyQuery(deleteSimpleTableQuery, bearer);
+                var result = query.Execute();
+                var resultObj = PipefyQuery.ParseJson(result);
+                var success = resultObj["data"]["deleteTable"].Value<bool>("success");
+                Assert.IsTrue(success);
+            }
+
+            if (!string.IsNullOrWhiteSpace(customFieldsTableId))
+            {
+                var deleteSimpleTableQuery = string.Format(deleteTableQuery, customFieldsTableId);
+                var query = new PipefyQuery(deleteSimpleTableQuery, bearer);
+                var result = query.Execute();
+                var resultObj = PipefyQuery.ParseJson(result);
+                var success = resultObj["data"]["deleteTable"].Value<bool>("success");
+                Assert.IsTrue(success);
+            }
+        }
+
+        [Ignore]
         [TestMethod]
         public void TableRecord_CreateByDictionaryAndDelete_Success()
         {
@@ -24,7 +89,7 @@ namespace Capgemini.Pipefy.Test
             dict["TableID"] = config["table"].Value<string>("id");
             dict["Title"] = title;
             dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
+            // dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
 
             var act = new CreateTableRecord();
 
@@ -43,6 +108,7 @@ namespace Capgemini.Pipefy.Test
             Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
         }
 
+        [Ignore]
         [TestMethod]
         public void TableRecord_CreateByDataRowAndDelete_Success()
         {
@@ -55,7 +121,7 @@ namespace Capgemini.Pipefy.Test
             dict["TableID"] = config["table"].Value<string>("id");
             dict["Title"] = title;
             dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            // dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
 
             var act = new CreateTableRecord();
 
@@ -81,27 +147,17 @@ namespace Capgemini.Pipefy.Test
             var config = TestConfiguration.Instance.Configuration;
             var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
             dict["TableID"] = config["table"].Value<string>("id");
-            dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
-            dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            // dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
+            // dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
             var act = new CreateTableRecord();
             WorkflowInvoker.Invoke(act, dict);
         }
     }
 
-    internal class TestTable
+    internal class Table
     {
-        public string TableId { get; protected set; }
-
-        private static TestTable _instance;
-        public static TestTable Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new TestTable();
-                return _instance;
-            }
-        }
+        public string Id { get; protected set; }
+        public string Name { get; protected set; }
 
         private JObject _info;
         public JObject Info
@@ -114,21 +170,15 @@ namespace Capgemini.Pipefy.Test
             }
         }
 
-        public TestTable()
+        public Table(string tableId)
         {
-            var config = TestConfiguration.Instance.Configuration;
-            TableId = config["table"].Value<string>("id");
-        }
-
-        public TestTable(string tableId) : this()
-        {
-            TableId = tableId;
+            Id = tableId;
         }
 
         private void LoadInfo()
         {
             var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = TableId;
+            dict["TableID"] = Id;
             var act = new GetTable();
             var result = WorkflowInvoker.Invoke(act, dict);
 
@@ -136,6 +186,7 @@ namespace Capgemini.Pipefy.Test
                 throw new ArgumentException("Couldn't load table info for table " + dict["TableID"].ToString());
             
             _info = result["Table"] as JObject;
+            Name = _info.Value<string>("name");
         }
 
         public Dictionary<string, object> GenerateRandomRecordDictionary()

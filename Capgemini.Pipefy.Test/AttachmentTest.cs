@@ -12,6 +12,7 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class AttachmentTest
     {
+        [Ignore]
         [TestMethod]
         public void UploadFile_SimpleText_Success()
         {
