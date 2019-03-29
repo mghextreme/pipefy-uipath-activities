@@ -23,6 +23,15 @@ namespace Capgemini.Pipefy.Test
             testConfig = TestConfiguration.Instance;
             simpleTable = Helper.Table.CreateTable("SimpleTable");
             customFieldsTable = Helper.Table.CreateTable("CustomFieldsTable");
+
+            // Add Custom Fields
+
+            var numberField = new Helper.CustomField("Code", "number");
+            customFieldsTable.CreateField(numberField);
+            var stringField = new Helper.CustomField("Description", "short_text");
+            customFieldsTable.CreateField(stringField);
+            var dateTimeField = new Helper.CustomField("Promo until", "datetime");
+            customFieldsTable.CreateField(dateTimeField);
         }
 
         [ClassCleanup]
@@ -32,20 +41,19 @@ namespace Capgemini.Pipefy.Test
             customFieldsTable.Delete();
         }
 
-        [Ignore]
         [TestMethod]
         public void TableRecord_CreateByDictionaryAndDelete_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-            string title = "Title " + DateTime.Now.Ticks;
+            var testConfig = TestConfiguration.Instance;
+            var title = "Table Record by Dict - " + DateTime.Now.ToShortDateString();
 
             // Create
 
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = config["table"].Value<string>("id");
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["TableID"] = customFieldsTable.Id;
             dict["Title"] = title;
             dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            // dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
+            dict["DictionaryFields"] = customFieldsTable.GenerateRandomRecordDictionary();
 
             var act = new CreateTableRecord();
 
@@ -55,7 +63,7 @@ namespace Capgemini.Pipefy.Test
 
             // Delete
 
-            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
+            dict = testConfig.GetDefaultActivityArguments();
             dict["TableRecordID"] = result["TableRecordID"];
 
             var act2 = new DeleteTableRecord();
@@ -64,20 +72,19 @@ namespace Capgemini.Pipefy.Test
             Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
         }
 
-        [Ignore]
         [TestMethod]
         public void TableRecord_CreateByDataRowAndDelete_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-            string title = "Title " + DateTime.Now.Ticks;
+            var testConfig = TestConfiguration.Instance;
+            var title = "Table Record by DataRow - " + DateTime.Now.ToShortDateString();
 
             // Create
 
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = config["table"].Value<string>("id");
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["TableID"] = customFieldsTable.Id;
             dict["Title"] = title;
             dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            // dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            dict["DataRowFields"] = customFieldsTable.GenerateRandomRecordDataRow();
 
             var act = new CreateTableRecord();
 
@@ -100,11 +107,11 @@ namespace Capgemini.Pipefy.Test
         [ExpectedException(typeof(ArgumentException))]
         public void TableRecord_AvoidDictionaryAndDataRow_Exception()
         {
-            var config = TestConfiguration.Instance.Configuration;
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = config["table"].Value<string>("id");
-            // dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
-            // dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            var testConfig = TestConfiguration.Instance;
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["TableID"] = customFieldsTable.Id;
+            dict["DictionaryFields"] = customFieldsTable.GenerateRandomRecordDictionary();
+            dict["DataRowFields"] = customFieldsTable.GenerateRandomRecordDataRow();
             var act = new CreateTableRecord();
             WorkflowInvoker.Invoke(act, dict);
         }

@@ -61,11 +61,11 @@ namespace Capgemini.Pipefy.TableRecord
             {
                 var dataRow = DataRowFields.Get(context);
                 var tempDict = dataRow.ToDictionary();
-                if (tempDict != null && tempDict.Count > 0)
+                if (tempDict != null)
                     dict = tempDict;
             }
 
-            if (string.IsNullOrWhiteSpace(title))
+            if (string.IsNullOrWhiteSpace(title) && dict?.Count > 0)
                 title = dict.First().Value.ToString();
 
             return BuildQuery(tableId, title, dict, dueDate);

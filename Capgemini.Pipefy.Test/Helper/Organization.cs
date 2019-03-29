@@ -4,7 +4,7 @@ namespace Capgemini.Pipefy.Test.Helper
 {
     internal class Organization
     {
-        private const string CreateOrganizationQuery = "mutation { createOrganization(input: { name: {1} industry: {0} }){ organization { created_at id name role } } }";
+        private const string CreateOrganizationQuery = "mutation {{ createOrganization(input: {{ name: {0} industry: {1} }}){{ organization {{ created_at id name role }} }} }}";
         private const string DeleteOrganizationQuery = "mutation {{ deleteOrganization(input: {{ id: {0} }}){{ success }} }}";
 
         public long Id { get; protected set; }
