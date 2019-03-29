@@ -1,21 +1,64 @@
 # GetPipe
 
-[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-pipe/pipe(id:-pipe_id))  
+[Official API](https://api-docs.pipefy.com/reference/queries/#pipe)  
 [Implemented Class](../Capgemini.Pipefy/Pipe/GetPipe.cs)
 
-Gets detailed information about a TableRecord in a Pipefy Table.
+Gets detailed information about a Pipe.
 
 ## Arguments
 
-### &lt;In&gt; TableRecordID : string
+### &lt;In&gt; PipeID : string
 
 ID of the Pipe to be obtained.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web.
 
 ### &lt;Out&gt; Pipe : JObject
 
-Pipe obtained (JObject).
+The Pipe obtained (JObject).
+
+Example object:
+
+```json
+{
+    "anyone_can_create_card": true,
+    "cards_count": 41,
+    "description": "The description of this pipe.",
+    "id": "123456",
+    "labels": [
+        {
+            "id": "1234567",
+            "name": "Label name"
+        }
+    ],
+    "name": "My Pipe",
+    "opened_cards_count": 13,
+    "phases": [
+        {
+            "cards_count": 7,
+            "done": false,
+            "id": "1234565",
+            "name": "Inbox"
+        },
+        {
+            "cards_count": 6,
+            "done": false,
+            "id": "1234566",
+            "name": "Doing"
+        },
+        {
+            "cards_count": 28,
+            "done": true,
+            "id": "1234567",
+            "name": "Done"
+        }
+    ],
+    "public": true,
+    "title_field": {
+        "id": "simple_information"
+    }
+}
+```
 
 ## Inherited Arguments
 

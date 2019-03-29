@@ -1,17 +1,11 @@
 # GetPhaseCards
 
-[Official API](https://pipefypipe.docs.apiary.io/#reference/0/show-phase/phase(id:-phase_id))  
+[Official API](https://api-docs.pipefy.com/reference/queries/#phase)  
 [Implemented Class](../Capgemini.Pipefy/Phase/GetPhaseCards.cs)
 
 Gets Cards present on a Phase.
 
 ## Arguments
-
-### &lt;In&gt; TableID : string
-
-The ID of the table in which the record should be added.
-
-You can find this info from the link when accessing it through the web.
 
 ### &lt;In&gt; PhaseID : long
 
@@ -19,15 +13,17 @@ ID of the Phase to be obtained.
 
 ### &lt;In&gt; Amount : int
 
-Amount to get.
+Amount of cards to get.
 
 ### &lt;In&gt; AfterCursor : string
 
 Page cursor to continue.
 
+> Obtain this value from the field _NextPageCursor_.
+
 ### &lt;In&gt; AssignedTo : long[]
 
-IDs of the assignees
+IDs of the assignees.
 
 ### &lt;In&gt; IgnoreIDs : long[]
 
@@ -37,22 +33,38 @@ Card IDs to ignore.
 
 IDs of the labels
 
-### &lt;In&gt; Title : long[]
+### &lt;In&gt; Title : string
 
-Title of the card
-
+Title of the card.
 
 ### &lt;Out&gt; Cards : JObject[]
 
-Cards obtained (JObject)
+Cards obtained (JObject[]).
+
+Example of each object:
+
+```json
+{
+    "created_at": "2019-03-22T11:26:35-03:00",
+    "done": false,
+    "due_date": "2019-04-02T11:30:00-03:00",
+    "expired": false,
+    "id": "12345678",
+    "late": false,
+    "title": "Title of my awesome card",
+    "url": "http://app.pipefy.com/pipes/123456#cards/12345678"
+}
+```
 
 ### &lt;Out&gt; HasNextPage : bool
 
-True if there are elements after the last obtained
+True if there are elements after the last obtained.
 
 ### &lt;Out&gt; NextPageCursor : string
 
-The cursor to be used to obtain the next page
+The cursor to be used to obtain the next page.
+
+> When requesting the following cards, use this value in the _AfterCursor_ field.
 
 ## Inherited Arguments
 

@@ -1,6 +1,6 @@
 # GetTables
 
-[Official API](https://pipefydatabase.docs.apiary.io/#reference/0/list-tables/tables(ids:-[table_ids]))  
+[Official API](https://api-docs.pipefy.com/reference/queries/#table)  
 [Implemented Class](../Capgemini.Pipefy/Table/GetTables.cs)
 
 Gets information about multiple Tables in Pipefy.
@@ -11,11 +11,24 @@ Gets information about multiple Tables in Pipefy.
 
 IDs of the Tables to be obtained.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web
 
 ### &lt;Out&gt; Table : JObject[]
 
-Tables obtained (JObject[]).
+The Tables obtained (JObject[]).
+
+Example of each object:
+
+```json
+{
+    "description": "A simple description for this table.",
+    "id": "M4a7Dqr6",
+    "name": "TableName",
+    "public": true,
+    "table_records_count": 1,
+    "url": "http://app.pipefy.com/database_v2/tables/M4a7Dqr6-tablename"
+}
+```
 
 ## Inherited Arguments
 

@@ -12,7 +12,7 @@ namespace Capgemini.Pipefy.Table
     [Description("Gets information about multiple Tables in Pipefy.")]
     public class GetTables : PipefyQueryActivity
     {
-        private const string GetTablesQuery = @"query {{ tables(ids: [ {0} ]){{ id name description public table_records_count }} }}";
+        private const string GetTablesQuery = @"query {{ tables(ids: [ {0} ]){{ id name description public table_records_count url }} }}";
 
         [Category("Input")]
         [Description("IDs of the Tables to be obtained")]

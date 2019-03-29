@@ -5,7 +5,7 @@
 
 Uploads an attachment to Pipefy.
 
-> *Important!* This activity just uploads the file and doesn't attaches it to any object. To attach it, check the guides on updating [Cards](updateCardField.md) and [TableRecord](setTableRecordFieldValue.md) fields.
+> **Important!** This activity just uploads the file and doesn't attaches it to any object. To attach it, check the guides on updating [Cards](updateCardField.md) and [TableRecord](setTableRecordFieldValue.md) fields.
 
 ## Arguments
 
@@ -31,7 +31,7 @@ Path of the file to be uploaded.
 
 Private URL of the uploaded file.
 
-> *Important!* This is a single string, but when setting fields in either TableRecords or Cards, the attachment type receives multiple items, so you need to place this string inside a string array.
+> **Important!** This is a single string, but when setting fields in either TableRecords or Cards, the attachment type receives multiple items, so you need to place this string inside a string array.
 
 ## Inherited Arguments
 

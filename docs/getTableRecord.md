@@ -1,6 +1,6 @@
 # GetTableRecord
 
-[Official API](https://api-docs.pipefy.com/reference/mutations/getTableRecord/)  
+[Official API](https://api-docs.pipefy.com/reference/queries/#table_record)  
 [Implemented Class](../Capgemini.Pipefy/TableRecord/GetTableRecord.cs)
 
 Gets detailed information about a TableRecord in a Pipefy Table.
@@ -11,12 +11,60 @@ Gets detailed information about a TableRecord in a Pipefy Table.
 
 The ID of the TableRecord to be obtained.
 
-You can find this info from the link when accessing it through the web
-
+You can find this info from the API or from the link when accessing it through the web
 
 ### &lt;Out&gt; TableRecord : JObject
 
 TableRecord obtained (JObject).
+
+Example object:
+
+```json
+{
+    "created_at": "2019-03-20T15:45:54-03:00",
+    "created_by": {
+        "email": "your.email@company.com",
+        "id": "123456",
+        "name": "Your Name"
+    },
+    "due_date": "2019-04-05T12:00:00-03:00",
+    "finished_at": null,
+    "id": "12345678",
+    "record_fields": [
+        {
+            "array_value": [ "path/to/file.pdf" ],
+            "datetime_value": null,
+            "field": {
+                "id": "report",
+                "type": "attachment"
+            },
+            "name": "Report",
+            "value": "[\"path/to/file.pdf\"]"
+        },
+        {
+            "array_value": null,
+            "datetime_value": null,
+            "field": {
+                "id": "simple_code",
+                "type": "number"
+            },
+            "name": "Simple Code",
+            "value": "18471"
+        }
+    ],
+    "status": {
+        "id": "1234567",
+        "name": "Active"
+    },
+    "table": {
+        "id": "M4a7Dqr6",
+        "name": "TableName"
+    },
+    "title": "Record Title",
+    "updated_at": "2019-03-21T13:24:59-03:00",
+    "url": "http://app.pipefy.com/database_v2/tables/M4a7Dqr6-tablename/table_records/12345678"
+}
+```
 
 ## Inherited Arguments
 

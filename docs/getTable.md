@@ -1,6 +1,6 @@
 # GetTable
 
-[Official API](https://pipefydatabase.docs.apiary.io/#reference/0/show-table)  
+[Official API](https://api-docs.pipefy.com/reference/queries/#table)  
 [Implemented Class](../Capgemini.Pipefy/Table/GetTable.cs)
 
 Gets detailed information about a Table in Pipefy.
@@ -11,11 +11,58 @@ Gets detailed information about a Table in Pipefy.
 
 ID of the Table to be obtained.
 
-You can find this info from the link when accessing it through the web
+You can find this info from the API or from the link when accessing it through the web
 
 ### &lt;Out&gt; Table : JObject
 
 Table obtained (JObject).
+
+Example object:
+
+```json
+{
+    "description": "A simple description for this table.",
+    "id": "M4a7Dqr6",
+    "name": "TableName",
+    "public": true,
+    "statuses": [
+        {
+            "id": "1234567",
+            "name": "Active"
+        },
+        {
+            "id": "1234568",
+            "name": "Done"
+        }
+    ],
+    "table_fields": [
+        {
+            "description": null,
+            "id": "example_number",
+            "internal_id": "12345678",
+            "label": "Example Number",
+            "required": true,
+            "type": "number"
+        },
+        {
+            "description": "One example description for this field",
+            "id": "example_text",
+            "internal_id": "12345679",
+            "label": "Example Text",
+            "required": false,
+            "type": "short_text"
+        }
+    ],
+    "table_records_count": 1,
+    "title_field": {
+        "id": "example_number",
+        "internal_id": "12345678",
+        "label": "Example Number",
+        "type": "number"
+    },
+    "url": "http://app.pipefy.com/database_v2/tables/M4a7Dqr6-tablename"
+}
+```
 
 ## Inherited Arguments
 

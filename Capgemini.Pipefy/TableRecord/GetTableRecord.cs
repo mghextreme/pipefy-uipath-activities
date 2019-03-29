@@ -10,7 +10,7 @@ namespace Capgemini.Pipefy.TableRecord
     [Description("Gets detailed information about a TableRecord in a Pipefy Table.")]
     public class GetTableRecord : PipefyQueryActivity
     {
-        private const string GetTableRecordQuery = "query {{ table_record(id: {0}){{ created_at created_by {{ id name email }} due_date finished_at id status {{ id name }} record_fields {{ name value array_value datetime_value }} table {{ id name }} title updated_at url }} }}";
+        private const string GetTableRecordQuery = "query {{ table_record(id: {0}){{ created_at created_by {{ id name email }} due_date finished_at id status {{ id name }} record_fields {{ name value array_value datetime_value field { id type } }} table {{ id name }} title updated_at url }} }}";
 
         [Category("Input")]
         [Description("TableRecord ID to be obtained")]

@@ -23,7 +23,7 @@ You can find this name by accessing the edit panel of the table.
 
 The value to be placed at the field.
 
-> *Important!* When setting fields which accept multiple values, such as attachments, watch out for:
+> **Important!** When setting fields which accept multiple values, such as attachments, watch out for:
 >
 > - Make sure to set the field as an array object
 > - Because you're setting the field, any value present in the list will be removed

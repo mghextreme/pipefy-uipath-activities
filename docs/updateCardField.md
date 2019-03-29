@@ -21,7 +21,7 @@ ID of the field to be updated.
 
 Value to be placed at the field.
 
-> *Important!* When setting fields which accept multiple values, such as attachments, watch out for:
+> **Important!** When setting fields which accept multiple values, such as attachments, watch out for:
 >
 > - Make sure to set the field as an array object
 > - Because you're setting the field, any value present in the list will be removed
