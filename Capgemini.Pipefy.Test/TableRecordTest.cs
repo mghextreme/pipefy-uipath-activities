@@ -14,66 +14,22 @@ namespace Capgemini.Pipefy.Test
     public class TableRecordTest
     {
         private static TestConfiguration testConfig;
-        private static string simpleTableId, customFieldsTableId;
+        private static Helper.Table simpleTable, customFieldsTable;
+        private static Dictionary<string, string> customFields;
 
         [ClassInitialize]
         public static void TableRecordTestInitialize(TestContext context)
         {
             testConfig = TestConfiguration.Instance;
-            var bearer = testConfig.GetBearer();
-            var orgId = testConfig.GetCustomConfig("OrganizationID");
-
-            var createTableQuery = "mutation {{ createTable(input: {{ organization_id: {0} name: {1} public: true }}){{ table {{ id name url }} }} }}";
-
-            // Create simple table
-
-            var createSimpleTable = string.Format(createTableQuery, orgId, "SimpleTable".ToQueryValue());
-            var query = new PipefyQuery(createSimpleTable, bearer);
-            var result = query.Execute();
-            var resultObj = PipefyQuery.ParseJson(result);
-
-            var table = resultObj["data"]["createTable"]["table"];
-            simpleTableId = table.Value<string>("id");
-
-            // Create table with custom fields
-
-            var createCustomFieldsTable = string.Format(createTableQuery, orgId, "CustomFieldsTable".ToQueryValue());
-            query = new PipefyQuery(createCustomFieldsTable, bearer);
-            result = query.Execute();
-            resultObj = PipefyQuery.ParseJson(result);
-
-            table = resultObj["data"]["createTable"]["table"];
-            customFieldsTableId = table.Value<string>("id");
+            simpleTable = Helper.Table.CreateTable("SimpleTable");
+            customFieldsTable = Helper.Table.CreateTable("CustomFieldsTable");
         }
 
         [ClassCleanup]
         public static void TableRecordTestCleanup()
         {
-            var bearer = testConfig.GetBearer();
-
-            // Delete tables after tests
-
-            var deleteTableQuery = "mutation {{ deleteTable(input: {{ id: {0} }}){{ success }} }}";
-
-            if (!string.IsNullOrWhiteSpace(simpleTableId))
-            {
-                var deleteSimpleTableQuery = string.Format(deleteTableQuery, simpleTableId);
-                var query = new PipefyQuery(deleteSimpleTableQuery, bearer);
-                var result = query.Execute();
-                var resultObj = PipefyQuery.ParseJson(result);
-                var success = resultObj["data"]["deleteTable"].Value<bool>("success");
-                Assert.IsTrue(success);
-            }
-
-            if (!string.IsNullOrWhiteSpace(customFieldsTableId))
-            {
-                var deleteSimpleTableQuery = string.Format(deleteTableQuery, customFieldsTableId);
-                var query = new PipefyQuery(deleteSimpleTableQuery, bearer);
-                var result = query.Execute();
-                var resultObj = PipefyQuery.ParseJson(result);
-                var success = resultObj["data"]["deleteTable"].Value<bool>("success");
-                Assert.IsTrue(success);
-            }
+            simpleTable.Delete();
+            customFieldsTable.Delete();
         }
 
         [Ignore]
@@ -151,92 +107,6 @@ namespace Capgemini.Pipefy.Test
             // dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
             var act = new CreateTableRecord();
             WorkflowInvoker.Invoke(act, dict);
-        }
-    }
-
-    internal class Table
-    {
-        public string Id { get; protected set; }
-        public string Name { get; protected set; }
-
-        private JObject _info;
-        public JObject Info
-        {
-            get
-            {
-                if (_info == null)
-                    LoadInfo();
-                return _info;
-            }
-        }
-
-        public Table(string tableId)
-        {
-            Id = tableId;
-        }
-
-        private void LoadInfo()
-        {
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = Id;
-            var act = new GetTable();
-            var result = WorkflowInvoker.Invoke(act, dict);
-
-            if (!(bool)result["Success"])
-                throw new ArgumentException("Couldn't load table info for table " + dict["TableID"].ToString());
-            
-            _info = result["Table"] as JObject;
-            Name = _info.Value<string>("name");
-        }
-
-        public Dictionary<string, object> GenerateRandomRecordDictionary()
-        {
-            var fields = new Dictionary<string, object>();
-            var fieldsConfig = Info["table_fields"] as JArray;
-            foreach (var item in fieldsConfig)
-            {
-                var fieldName = item.Value<string>("id");
-                var fieldType = item.Value<string>("type").ToLower();
-                fields.Add(fieldName, GetRandomValueByType(fieldType, fieldName));
-            }
-            return fields;
-        }
-
-        public DataRow GenerateRandomRecordDataRow()
-        {
-            var dataTable = new DataTable(Info.Value<string>("name"));
-            var fields = Info["table_fields"] as JArray;
-            
-            foreach (var item in fields)
-            {
-                var fieldName = item.Value<string>("id");
-                dataTable.Columns.Add(fieldName);
-            }
-
-            var row = dataTable.NewRow();
-            foreach (var item in fields)
-            {
-                var fieldName = item.Value<string>("id");
-                var fieldType = item.Value<string>("type").ToLower();
-                row[fieldName] = GetRandomValueByType(fieldType, fieldName);
-            }
-            dataTable.Rows.Add(row);
-
-            return row;
-        }
-
-        private object GetRandomValueByType(string type, string fieldName)
-        {
-            switch (type)
-            {
-                case "number":
-                    return DateTime.Now.Millisecond;
-                case "short_text":
-                case "long_text":
-                    return fieldName + " text " + DateTime.Now.Ticks;
-                default:
-                    return fieldName;
-            }
         }
     }
 }
