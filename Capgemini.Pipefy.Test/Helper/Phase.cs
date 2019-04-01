@@ -15,6 +15,11 @@ namespace Capgemini.Pipefy.Test.Helper
         public Pipe Pipe { get; protected set; }
         public ICollection<CustomField> Fields { get; protected set; }
 
+        public Phase()
+        {
+            Fields = new List<CustomField>();
+        }
+
         internal void SetParentPipe(Pipe pipe)
         {
             Pipe = pipe;
