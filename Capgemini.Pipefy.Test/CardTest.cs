@@ -11,27 +11,42 @@ namespace Capgemini.Pipefy.Test
     public class CardTest
     {
         private static TestConfiguration testConfig;
+        private static Helper.Pipe pipe;
+        private static Helper.Phase simplePhase, customFieldsPhase;
 
         [ClassInitialize]
-        public static void CardTestInitialize(TestContext context)
+        public static void PipeTestInitialize(TestContext context)
         {
             testConfig = TestConfiguration.Instance;
+            pipe = Helper.Pipe.CreatePipe("PhasesPipe");
+            simplePhase = Helper.Phase.CreatePhase(pipe, "SimplePhase", false);
+            customFieldsPhase = Helper.Phase.CreatePhase(pipe, "CustomFieldsPhase", false);
+
+            // Add Custom Fields
+
+            var numberField = new Helper.CustomField("Mileage", "number");
+            customFieldsPhase.CreateField(numberField);
+            var stringField = new Helper.CustomField("Chassi code", "short_text");
+            customFieldsPhase.CreateField(stringField);
+            var dateTimeField = new Helper.CustomField("Bought on", "datetime");
+            customFieldsPhase.CreateField(dateTimeField);
         }
 
         [ClassCleanup]
-        public static void CardTestCleanup()
+        public static void PipeTestCleanup()
         {
-
+            simplePhase.Delete();
+            customFieldsPhase.Delete();
+            pipe.Delete();
         }
 
-        [Ignore]
         [TestMethod]
         public void Card_CreateAndDelete_Success()
         {
             // Create
 
             var dict = testConfig.GetDefaultActivityArguments();
-            dict["PipeID"] = testConfig.Configuration.Value<string>("id");
+            dict["PipeID"] = pipe.Id;
             dict["Title"] = "Test Card " + DateTime.Now.ToShortDateString();
             dict["DueDate"] = DateTime.Now.AddDays(6);
 
