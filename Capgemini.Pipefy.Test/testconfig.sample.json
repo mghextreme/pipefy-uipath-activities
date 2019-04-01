@@ -1,15 +1,4 @@
 {
-    "api": {
-        "bearer": "",
-        "timeout": 30000
-    },
-    "organization": {
-        "id": ""
-    },
-    "table": {
-        "id": ""
-    },
-    "pipe": {
-        "id": ""
-    }
+    "bearer": "",
+    "timeout": 30000
 }

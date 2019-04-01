@@ -10,14 +10,27 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class PipeTest
     {
+        private static TestConfiguration testConfig;
+        private static Helper.Pipe pipe1;
+
+        [ClassInitialize]
+        public static void PipeTestInitialize(TestContext context)
+        {
+            testConfig = TestConfiguration.Instance;
+            pipe1 = Helper.Pipe.CreatePipe("Pipe1");
+        }
+
+        [ClassCleanup]
+        public static void PipeTestCleanup()
+        {
+            pipe1.Delete();
+        }
+
         [TestMethod]
         public void Pipe_GetSingle_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            long pipeId = config["pipe"].Value<long>("id");
-            dict["PipeID"] = pipeId;
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PipeID"] = pipe1.Id;
 
             var act = new GetPipe();
 
@@ -25,8 +38,7 @@ namespace Capgemini.Pipefy.Test
             Assert.IsTrue((bool)result["Success"]);
 
             var json = result["Pipe"] as JObject;
-            Assert.AreEqual(pipeId, json.Value<long>("id"));
-            Assert.IsTrue(json["phases"].Children().Count() > 0);
+            Assert.AreEqual(pipe1.Id, json.Value<long>("id"));
         }
     }
 }

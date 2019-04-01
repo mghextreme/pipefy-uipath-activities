@@ -2,6 +2,7 @@ using System;
 using System.Activities;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Capgemini.Pipefy.Table;
 using Capgemini.Pipefy.TableRecord;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,180 +13,146 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class TableRecordTest
     {
+        private static TestConfiguration testConfig;
+        private static Helper.Table simpleTable, customFieldsTable;
+
+        [ClassInitialize]
+        public static void TableRecordTestInitialize(TestContext context)
+        {
+            testConfig = TestConfiguration.Instance;
+            simpleTable = Helper.Table.CreateTable("SimpleTable");
+            customFieldsTable = Helper.Table.CreateTable("CustomFieldsTable");
+
+            // Add Custom Fields
+
+            var numberField = new Helper.CustomField("Code", "number");
+            customFieldsTable.CreateField(numberField);
+            var stringField = new Helper.CustomField("Description", "short_text");
+            customFieldsTable.CreateField(stringField);
+            var dateTimeField = new Helper.CustomField("Promo until", "datetime");
+            customFieldsTable.CreateField(dateTimeField);
+        }
+
+        [ClassCleanup]
+        public static void TableRecordTestCleanup()
+        {
+            simpleTable.Delete();
+            customFieldsTable.Delete();
+        }
+
         [TestMethod]
         public void TableRecord_CreateByDictionaryAndDelete_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-            string title = "Title " + DateTime.Now.Ticks;
+            var title = "Table Record by Dict - " + DateTime.Now.ToShortDateString();
+            var dueDate = DateTime.Now.AddDays(10).Date;
 
             // Create
 
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = config["table"].Value<string>("id");
+            var dict = testConfig.GetDefaultActivityArguments();
+            var dictValues = customFieldsTable.GenerateRandomRecordDictionary();
+            dict["TableID"] = customFieldsTable.Id;
             dict["Title"] = title;
-            dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
+            dict["DueDate"] = dueDate;
+            dict["DictionaryFields"] = dictValues;
 
             var act = new CreateTableRecord();
 
             var result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.IsTrue((long)result["TableRecordID"] > 0);
+            var recordId = (long)result["TableRecordID"];
+            Assert.IsTrue(recordId > 0);
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
+
+            var act2 = new GetTableRecord();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var tableRecord = (JObject)result["TableRecord"];
+
+            Assert.AreEqual(title, tableRecord.Value<string>("title"));
+            Assert.AreEqual(dueDate, tableRecord.Value<DateTime>("due_date"));
+
+            var valuesJArray = tableRecord["record_fields"] as JArray;
+            var valuesDict = Helper.TableRecord.FieldsJArrayToJObjectDictionary(valuesJArray);
+            Assert.AreEqual(dictValues["code"].ToString(), valuesDict["code"].Value<string>("value"));
+            Assert.AreEqual(dictValues["description"], valuesDict["description"].Value<string>("value"));
 
             // Delete
 
-            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableRecordID"] = result["TableRecordID"];
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
 
-            var act2 = new DeleteTableRecord();
-            result = WorkflowInvoker.Invoke(act2, dict);
+            var act3 = new DeleteTableRecord();
+            result = WorkflowInvoker.Invoke(act3, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
+            Assert.AreEqual(act3.SuccessMessage, result["Status"].ToString());
         }
 
         [TestMethod]
         public void TableRecord_CreateByDataRowAndDelete_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-            string title = "Title " + DateTime.Now.Ticks;
+            var title = "Table Record by DataRow - " + DateTime.Now.ToShortDateString();
+            var dueDate = DateTime.Now.AddDays(10).Date;
 
             // Create
 
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = config["table"].Value<string>("id");
+            var dict = testConfig.GetDefaultActivityArguments();
+            var dataRowValues = customFieldsTable.GenerateRandomRecordDataRow();
+            dict["TableID"] = customFieldsTable.Id;
             dict["Title"] = title;
-            dict["DueDate"] = DateTime.Now.AddDays(10).Date;
-            dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            dict["DueDate"] = dueDate;
+            dict["DataRowFields"] = dataRowValues;
 
             var act = new CreateTableRecord();
 
             var result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.IsTrue((long)result["TableRecordID"] > 0);
+            var recordId = (long)result["TableRecordID"];
+            Assert.IsTrue(recordId > 0);
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
+
+            var act2 = new GetTableRecord();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var tableRecord = (JObject)result["TableRecord"];
+
+            Assert.AreEqual(title, tableRecord.Value<string>("title"));
+            Assert.AreEqual(dueDate, tableRecord.Value<DateTime>("due_date"));
+
+            var valuesJArray = tableRecord["record_fields"] as JArray;
+            var valuesDict = Helper.TableRecord.FieldsJArrayToJObjectDictionary(valuesJArray);
+            Assert.AreEqual(dataRowValues["code"].ToString(), valuesDict["code"].Value<string>("value"));
+            Assert.AreEqual(dataRowValues["description"], valuesDict["description"].Value<string>("value"));
 
             // Delete
 
-            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableRecordID"] = result["TableRecordID"];
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["TableRecordID"] = recordId;
 
-            var act2 = new DeleteTableRecord();
-            result = WorkflowInvoker.Invoke(act2, dict);
+            var act3 = new DeleteTableRecord();
+            result = WorkflowInvoker.Invoke(act3, dict);
             Assert.IsTrue((bool)result["Success"]);
-            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
+            Assert.AreEqual(act3.SuccessMessage, result["Status"].ToString());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void TableRecord_AvoidDictionaryAndDataRow_Exception()
         {
-            var config = TestConfiguration.Instance.Configuration;
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = config["table"].Value<string>("id");
-            dict["DictionaryFields"] = TestTable.Instance.GenerateRandomRecordDictionary();
-            dict["DataRowFields"] = TestTable.Instance.GenerateRandomRecordDataRow();
+            var testConfig = TestConfiguration.Instance;
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["TableID"] = customFieldsTable.Id;
+            dict["DictionaryFields"] = customFieldsTable.GenerateRandomRecordDictionary();
+            dict["DataRowFields"] = customFieldsTable.GenerateRandomRecordDataRow();
             var act = new CreateTableRecord();
             WorkflowInvoker.Invoke(act, dict);
-        }
-    }
-
-    internal class TestTable
-    {
-        public string TableId { get; protected set; }
-
-        private static TestTable _instance;
-        public static TestTable Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new TestTable();
-                return _instance;
-            }
-        }
-
-        private JObject _info;
-        public JObject Info
-        {
-            get
-            {
-                if (_info == null)
-                    LoadInfo();
-                return _info;
-            }
-        }
-
-        public TestTable()
-        {
-            var config = TestConfiguration.Instance.Configuration;
-            TableId = config["table"].Value<string>("id");
-        }
-
-        public TestTable(string tableId) : this()
-        {
-            TableId = tableId;
-        }
-
-        private void LoadInfo()
-        {
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["TableID"] = TableId;
-            var act = new GetTable();
-            var result = WorkflowInvoker.Invoke(act, dict);
-
-            if (!(bool)result["Success"])
-                throw new ArgumentException("Couldn't load table info for table " + dict["TableID"].ToString());
-            
-            _info = result["Table"] as JObject;
-        }
-
-        public Dictionary<string, object> GenerateRandomRecordDictionary()
-        {
-            var fields = new Dictionary<string, object>();
-            var fieldsConfig = Info["table_fields"] as JArray;
-            foreach (var item in fieldsConfig)
-            {
-                var fieldName = item.Value<string>("id");
-                var fieldType = item.Value<string>("type").ToLower();
-                fields.Add(fieldName, GetRandomValueByType(fieldType, fieldName));
-            }
-            return fields;
-        }
-
-        public DataRow GenerateRandomRecordDataRow()
-        {
-            var dataTable = new DataTable(Info.Value<string>("name"));
-            var fields = Info["table_fields"] as JArray;
-            
-            foreach (var item in fields)
-            {
-                var fieldName = item.Value<string>("id");
-                dataTable.Columns.Add(fieldName);
-            }
-
-            var row = dataTable.NewRow();
-            foreach (var item in fields)
-            {
-                var fieldName = item.Value<string>("id");
-                var fieldType = item.Value<string>("type").ToLower();
-                row[fieldName] = GetRandomValueByType(fieldType, fieldName);
-            }
-            dataTable.Rows.Add(row);
-
-            return row;
-        }
-
-        private object GetRandomValueByType(string type, string fieldName)
-        {
-            switch (type)
-            {
-                case "number":
-                    return DateTime.Now.Millisecond;
-                case "short_text":
-                case "long_text":
-                    return fieldName + " text " + DateTime.Now.Ticks;
-                default:
-                    return fieldName;
-            }
         }
     }
 }

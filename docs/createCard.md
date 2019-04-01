@@ -49,7 +49,7 @@ ID of the parent Cards.
 
 ID of the Phase in which the Card should be placed.
 
-### &lt;In&gt; PipeID : string
+### &lt;In&gt; PipeID : long
 
 ID of the Pipe in which the Card should be created.
 

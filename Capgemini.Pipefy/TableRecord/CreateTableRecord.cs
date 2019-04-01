@@ -61,11 +61,11 @@ namespace Capgemini.Pipefy.TableRecord
             {
                 var dataRow = DataRowFields.Get(context);
                 var tempDict = dataRow.ToDictionary();
-                if (tempDict != null && tempDict.Count > 0)
+                if (tempDict != null)
                     dict = tempDict;
             }
 
-            if (string.IsNullOrWhiteSpace(title))
+            if (string.IsNullOrWhiteSpace(title) && dict?.Count > 0)
                 title = dict.First().Value.ToString();
 
             return BuildQuery(tableId, title, dict, dueDate);
@@ -74,7 +74,7 @@ namespace Capgemini.Pipefy.TableRecord
         public static string BuildQuery(string tableId, string title, Dictionary<string, object> customFields, DateTime dueDate)
         {
             string fieldsString = string.Empty;
-            if (customFields.Count > 0)
+            if (customFields?.Count > 0)
             {
                 List<string> fields = new List<string>();
                 foreach (var item in customFields)

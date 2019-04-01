@@ -10,15 +10,43 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class CardTest
     {
+        private static TestConfiguration testConfig;
+        private static Helper.Pipe pipe;
+        private static Helper.Phase simplePhase, customFieldsPhase;
+
+        [ClassInitialize]
+        public static void PipeTestInitialize(TestContext context)
+        {
+            testConfig = TestConfiguration.Instance;
+            pipe = Helper.Pipe.CreatePipe("PhasesPipe");
+            simplePhase = Helper.Phase.CreatePhase(pipe, "SimplePhase", false);
+            customFieldsPhase = Helper.Phase.CreatePhase(pipe, "CustomFieldsPhase", false);
+
+            // Add Custom Fields
+
+            var numberField = new Helper.CustomField("Mileage", "number");
+            customFieldsPhase.CreateField(numberField);
+            var stringField = new Helper.CustomField("Chassi code", "short_text");
+            customFieldsPhase.CreateField(stringField);
+            var dateTimeField = new Helper.CustomField("Bought on", "datetime");
+            customFieldsPhase.CreateField(dateTimeField);
+        }
+
+        [ClassCleanup]
+        public static void PipeTestCleanup()
+        {
+            simplePhase.Delete();
+            customFieldsPhase.Delete();
+            pipe.Delete();
+        }
+
         [TestMethod]
         public void Card_CreateAndDelete_Success()
         {
-            var config = TestConfiguration.Instance.Configuration;
-
             // Create
 
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["PipeID"] = config["pipe"].Value<string>("id");
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PipeID"] = pipe.Id;
             dict["Title"] = "Test Card " + DateTime.Now.ToShortDateString();
             dict["DueDate"] = DateTime.Now.AddDays(6);
 
@@ -31,7 +59,7 @@ namespace Capgemini.Pipefy.Test
 
             // Delete
 
-            dict = TestConfiguration.Instance.GetDefaultActivityArguments();
+            dict = testConfig.GetDefaultActivityArguments();
             dict["CardID"] = result["CardID"];
 
             var act2 = new DeleteCard();

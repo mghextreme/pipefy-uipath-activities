@@ -51,7 +51,7 @@ namespace Capgemini.Pipefy.Card
         [Category("Input")]
         [Description("ID of the Pipe in which the Card should be created")]
         [RequiredArgument]
-        public InArgument<string> PipeID { get; set; }
+        public InArgument<long> PipeID { get; set; }
 
         [Category("Input")]
         [Description("The title of the Card")]
