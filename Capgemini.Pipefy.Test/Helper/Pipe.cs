@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Capgemini.Pipefy.Test.Helper
 {
@@ -9,6 +10,12 @@ namespace Capgemini.Pipefy.Test.Helper
 
         public long Id { get; protected set; }
         public string Name { get; protected set; }
+        public ICollection<Phase> Phases { get; protected set; }
+
+        private Pipe()
+        {
+            Phases = new List<Phase>();
+        }
 
         public void Delete()
         {

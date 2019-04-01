@@ -11,16 +11,32 @@ namespace Capgemini.Pipefy.Test
     [TestClass]
     public class PhaseTest
     {
-        [Ignore]
+        private static TestConfiguration testConfig;
+        private static Helper.Pipe pipe;
+        private static Helper.Phase simplePhase, customFieldsPhase;
+
+        [ClassInitialize]
+        public static void PipeTestInitialize(TestContext context)
+        {
+            testConfig = TestConfiguration.Instance;
+            pipe = Helper.Pipe.CreatePipe("PhasesPipe");
+            simplePhase = Helper.Phase.CreatePhase(pipe, "SimplePhase", false);
+            customFieldsPhase = Helper.Phase.CreatePhase(pipe, "CustomFieldsPhase", false);
+        }
+
+        [ClassCleanup]
+        public static void PipeTestCleanup()
+        {
+            simplePhase.Delete();
+            customFieldsPhase.Delete();
+            pipe.Delete();
+        }
+
         [TestMethod]
         public void Phase_GetSingle_Success()
         {
-            var phases = TestPipe.Instance.Info["phases"] as JArray;
-            Assert.IsTrue(phases.Count > 0);
-
-            long phaseId = phases.First.Value<long>("id");
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["PhaseID"] = phaseId;
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PhaseID"] = simplePhase.Id;
 
             var act = new GetPhase();
 
@@ -28,59 +44,9 @@ namespace Capgemini.Pipefy.Test
             Assert.IsTrue((bool)result["Success"]);
 
             var json = result["Phase"] as JObject;
-            Assert.AreEqual(phaseId, json.Value<long>("id"));
-            Assert.IsTrue(json["cards_can_be_moved_to_phases"].Children().Count() > 0);
-        }
-    }
-
-    internal class TestPipe
-    {
-        public long PipeId { get; protected set; }
-
-        private static TestPipe _instance;
-        public static TestPipe Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new TestPipe();
-                return _instance;
-            }
-        }
-
-        private JObject _info;
-        public JObject Info
-        {
-            get
-            {
-                if (_info == null)
-                    LoadInfo();
-                return _info;
-            }
-        }
-
-        public TestPipe()
-        {
-            var config = TestConfiguration.Instance.Configuration;
-            PipeId = config["pipe"].Value<long>("id");
-        }
-
-        public TestPipe(long pipeId) : this()
-        {
-            PipeId = pipeId;
-        }
-
-        private void LoadInfo()
-        {
-            var dict = TestConfiguration.Instance.GetDefaultActivityArguments();
-            dict["PipeID"] = PipeId;
-            var act = new GetPipe();
-            var result = WorkflowInvoker.Invoke(act, dict);
-
-            if (!(bool)result["Success"])
-                throw new ArgumentException("Couldn't load table info for pipe " + dict["PipeID"].ToString());
-            
-            _info = result["Pipe"] as JObject;
+            Assert.AreEqual(simplePhase.Id, json.Value<long>("id"));
+            Assert.AreEqual(simplePhase.Name, json.Value<string>("name"));
+            Assert.AreEqual(simplePhase.Done, json.Value<bool>("done"));
         }
     }
 }

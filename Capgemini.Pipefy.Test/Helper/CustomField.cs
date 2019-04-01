@@ -10,6 +10,7 @@ namespace Capgemini.Pipefy.Test.Helper
         public bool IsRequired { get; protected set; }
         public bool IsMultiple { get; set; }
         public Table Table { get; protected set; }
+        public Phase Phase { get; protected set; }
 
         internal CustomField() { }
 
@@ -25,6 +26,11 @@ namespace Capgemini.Pipefy.Test.Helper
         internal void SetParentTable(Table table)
         {
             Table = table;
+        }
+
+        internal void SetParentPhase(Phase phase)
+        {
+            Phase = phase;
         }
 
         internal object GetRandomValue()
