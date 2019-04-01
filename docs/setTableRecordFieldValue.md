@@ -45,3 +45,7 @@ A brief status message of the result of the action.
 ### &lt;Out&gt; Success : boolean
 
 True if the action was successful.
+
+---
+
+[All actions](../README.md)

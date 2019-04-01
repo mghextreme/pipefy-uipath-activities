@@ -47,3 +47,7 @@ In this case, the result would be something like:
     }
 }
 ```
+
+---
+
+[All actions](../README.md)
