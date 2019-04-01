@@ -28,19 +28,19 @@ namespace Capgemini.Pipefy.Phase
         [Description("Page cursor to continue")]
         public InArgument<string> AfterCursor { get; set; }
 
-        [Category("Input (Filter")]
+        [Category("Input (Filter)")]
         [Description("IDs of the assignees")]
         public InArgument<long[]> AssignedTo { get; set; }
 
-        [Category("Input (Filter")]
+        [Category("Input (Filter)")]
         [Description("Card IDs to ignore")]
         public InArgument<long[]> IgnoreIDs { get; set; }
 
-        [Category("Input (Filter")]
+        [Category("Input (Filter)")]
         [Description("IDs of the labels")]
         public InArgument<long[]> Labels { get; set; }
 
-        [Category("Input (Filter")]
+        [Category("Input (Filter)")]
         [Description("Title of the card")]
         public InArgument<string> Title { get; set; }
 
