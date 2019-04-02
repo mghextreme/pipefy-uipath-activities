@@ -1,4 +1,5 @@
 using System.Activities;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json.Linq;
 
@@ -21,6 +22,10 @@ namespace Capgemini.Pipefy.TableRecord
         [Description("TableRecord obtained (JObject)")]
         public OutArgument<JObject> TableRecord { get; set; }
 
+        [Category("Output")]
+        [Description("Card fields in Dictionary form")]
+        public OutArgument<Dictionary<string, object>> TableRecordFieldsDictionary { get; set; }
+
         protected override string GetQuery(CodeActivityContext context)
         {
             long recordId = TableRecordID.Get(context);
@@ -31,6 +36,10 @@ namespace Capgemini.Pipefy.TableRecord
         {
             var record = json["table_record"] as JObject;
             TableRecord.Set(context, record);
+
+            var fieldsJson = record["record_fields"] as JArray;
+            var fieldsDict = PipefyExtensions.FieldsJArrayToDictionary(fieldsJson);
+            TableRecordFieldsDictionary.Set(context, fieldsDict);
         }
     }
 }

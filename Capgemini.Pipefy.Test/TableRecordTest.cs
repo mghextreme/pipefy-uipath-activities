@@ -74,11 +74,14 @@ namespace Capgemini.Pipefy.Test
 
             Assert.AreEqual(title, tableRecord.Value<string>("title"));
             Assert.AreEqual(dueDate, tableRecord.Value<DateTime>("due_date"));
+            var fieldsDict = (Dictionary<string, object>)result["TableRecordFieldsDictionary"];
 
             var valuesJArray = tableRecord["record_fields"] as JArray;
             var valuesDict = Helper.TableRecord.FieldsJArrayToJObjectDictionary(valuesJArray);
             Assert.AreEqual(dictValues["code"].ToString(), valuesDict["code"].Value<string>("value"));
             Assert.AreEqual(dictValues["description"], valuesDict["description"].Value<string>("value"));
+            Assert.AreEqual(dictValues["code"].ToString(), fieldsDict["code"]);
+            Assert.AreEqual(dictValues["description"], fieldsDict["description"]);
 
             // Delete
 
@@ -122,6 +125,7 @@ namespace Capgemini.Pipefy.Test
             result = WorkflowInvoker.Invoke(act2, dict);
             Assert.IsTrue((bool)result["Success"]);
             var tableRecord = (JObject)result["TableRecord"];
+            var fieldsDict = (Dictionary<string, object>)result["TableRecordFieldsDictionary"];
 
             Assert.AreEqual(title, tableRecord.Value<string>("title"));
             Assert.AreEqual(dueDate, tableRecord.Value<DateTime>("due_date"));
@@ -130,6 +134,8 @@ namespace Capgemini.Pipefy.Test
             var valuesDict = Helper.TableRecord.FieldsJArrayToJObjectDictionary(valuesJArray);
             Assert.AreEqual(dataRowValues["code"].ToString(), valuesDict["code"].Value<string>("value"));
             Assert.AreEqual(dataRowValues["description"], valuesDict["description"].Value<string>("value"));
+            Assert.AreEqual(dataRowValues["code"].ToString(), fieldsDict["code"]);
+            Assert.AreEqual(dataRowValues["description"], fieldsDict["description"]);
 
             // Delete
 

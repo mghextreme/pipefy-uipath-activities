@@ -1,5 +1,6 @@
 using System;
 using System.Activities;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json.Linq;
 
@@ -22,6 +23,10 @@ namespace Capgemini.Pipefy.Card
         [Description("Card obtained (JObject)")]
         public OutArgument<JObject> Card { get; set; }
 
+        [Category("Output")]
+        [Description("Card fields in Dictionary form")]
+        public OutArgument<Dictionary<string, object>> CardFieldsDictionary { get; set; }
+
         protected override string GetQuery(CodeActivityContext context)
         {
             var cardId = CardID.Get(context);
@@ -32,6 +37,10 @@ namespace Capgemini.Pipefy.Card
         {
             var card = json["card"] as JObject;
             Card.Set(context, card);
+
+            var fieldsJson = card["fields"] as JArray;
+            var fieldsDict = PipefyExtensions.FieldsJArrayToDictionary(fieldsJson);
+            CardFieldsDictionary.Set(context, fieldsDict);
         }
     }
 }
