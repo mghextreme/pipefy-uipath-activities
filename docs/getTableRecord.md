@@ -66,6 +66,10 @@ Example object:
 }
 ```
 
+### &lt;Out&gt; TableRecordFieldsDictionary : Dictionary<string, object>
+
+The custom fields values in Dictionary form.
+
 ## Inherited Arguments
 
 ### &lt;In&gt; Bearer : string
