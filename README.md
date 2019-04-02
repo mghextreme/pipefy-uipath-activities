@@ -1,7 +1,6 @@
-# Pipefy x UiPath Custom Activities v2.0
+# Pipefy x UiPath Custom Activities v2.1
 
 This is a set of Custom Activities for UiPath with the objective of easing the connection with Pipefy actions.
-
 
 ## About Pipefy
 
@@ -61,4 +60,4 @@ Pipefy is a cloud-based business process management platform that empowers manag
 
 ---
 
-Developed by Matias Henschel([@mghextreme](https://github.com/mghextreme/)) and Lucas Pimenta([@pimenta138](https://github.com/pimenta138/)) at Capgemini.
+Developed by Matias Henschel ([@mghextreme](https://github.com/mghextreme/)) and Lucas Pimenta ([@pimenta138](https://github.com/pimenta138/)) at [Capgemini](https://www.capgemini.com/).
