@@ -12,7 +12,7 @@ namespace Capgemini.Pipefy.Card
     [Description("Gets detailes information on a Card.")]
     public class GetCard : PipefyQueryActivity
     {
-        private const string GetCardQuery = "query { card(id: {0}){ age assignees { email id name } checklist_items_checked_count checklist_items_count comments_count created_at created_by { email id name } current_phase { id name done } current_phase_age done due_date expiration { expiredAt shouldExpireAt } expired fields { name value array_value datetime_value filled_at field { id type } } finished_at id labels { name id } late phases_history { duration firstTimeIn lastTimeOut phase { id name } } pipe { id name } started_current_phase_at title updated_at url } }";
+        private const string GetCardQuery = "query {{ card(id: {0}){{ age assignees {{ email id name }} checklist_items_checked_count checklist_items_count comments_count created_at created_by {{ email id name }} current_phase {{ id name done }} current_phase_age done due_date expiration {{ expiredAt shouldExpireAt }} expired fields {{ name value array_value datetime_value filled_at field {{ id type }} }} finished_at id labels {{ name id }} late phases_history {{ duration firstTimeIn lastTimeOut phase {{ id name }} }} pipe {{ id name }} started_current_phase_at title updated_at url }} }}";
 
         [Category("Input")]
         [Description("ID of the Card to be obtained")]

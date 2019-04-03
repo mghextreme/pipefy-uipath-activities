@@ -18,7 +18,7 @@ namespace Capgemini.Pipefy.Test
         public static void PipeTestInitialize(TestContext context)
         {
             testConfig = TestConfiguration.Instance;
-            pipe = Helper.Pipe.CreatePipe("PhasesPipe");
+            pipe = Helper.Pipe.CreatePipe("CardsPipe");
             simplePhase = Helper.Phase.CreatePhase(pipe, "SimplePhase", false);
             customFieldsPhase = Helper.Phase.CreatePhase(pipe, "CustomFieldsPhase", false);
 
@@ -66,6 +66,69 @@ namespace Capgemini.Pipefy.Test
             result = WorkflowInvoker.Invoke(act2, dict);
             Assert.IsTrue((bool)result["Success"]);
             Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
+        }
+
+        [TestMethod]
+        public void Card_Update_Success()
+        {
+            // Create
+
+            var title = "Test Card " + DateTime.Now.ToShortDateString();
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PipeID"] = pipe.Id;
+            dict["Title"] = title;
+            dict["DueDate"] = DateTime.Now.AddDays(6);
+
+            PipefyQueryActivity act = new CreateCard();
+
+            var result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var cardId = (long)result["CardID"];
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new GetCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+
+            var cardJson = (JObject)result["Card"];
+            Assert.AreEqual(title, cardJson.Value<string>("title"));
+
+            // Update
+
+            title = "Updated Card " + DateTime.Now.ToShortDateString();
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+            dict["Title"] = title;
+
+            act = new UpdateCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new GetCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+
+            cardJson = (JObject)result["Card"];
+            Assert.AreEqual(title, cardJson.Value<string>("title"));
+
+            // Delete
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new DeleteCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
         }
     }
 }

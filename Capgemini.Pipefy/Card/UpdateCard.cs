@@ -12,7 +12,7 @@ namespace Capgemini.Pipefy.Card
     [Description("Updates a card in Pipefy.")]
     public class UpdateCard : PipefyQueryActivity
     {
-        private const string UpdateCardQuery = "mutation {{ updateCard(input: {{ id: {0} {1} }}){{ card {{ id updated_at title due_date assignees {{ id name email }} labels {{ id name }} }} }} }}";
+        private const string UpdateCardQuery = "mutation {{ updateCard(input: {{ id: {0} {1} }}){{ card {{ id updated_at }} }} }}";
 
         [Category("Input")]
         [Description("ID of the Card to be updated")]
@@ -33,7 +33,6 @@ namespace Capgemini.Pipefy.Card
 
         [Category("Input")]
         [Description("The title of the Card")]
-        [RequiredArgument]
         public InArgument<string> Title { get; set; }
 
         public override string SuccessMessage => "Updated";
@@ -67,9 +66,7 @@ namespace Capgemini.Pipefy.Card
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
         {
-            bool success = json["updateCard"].Value<bool>("success");
-            if (!success)
-                throw new PipefyException("Couldn't update card");
+            
         }
     }
 }
