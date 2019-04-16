@@ -30,7 +30,7 @@ namespace Capgemini.Pipefy.Card
             long card = CardID.Get(context);
             long phase = PhaseID.Get(context);
 
-            return string.Format(MoveCardToPhaseQuery, CardID, PhaseID);
+            return string.Format(MoveCardToPhaseQuery, card, phase);
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
