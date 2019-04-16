@@ -2,6 +2,7 @@ using System;
 using System.Activities;
 using System.Linq;
 using Capgemini.Pipefy.Card;
+using Capgemini.Pipefy.Phase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 
@@ -120,6 +121,45 @@ namespace Capgemini.Pipefy.Test
 
             cardJson = (JObject)result["Card"];
             Assert.AreEqual(title, cardJson.Value<string>("title"));
+
+            // Delete
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new DeleteCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+        }
+
+        [Ignore("Current API limitations don't let me set the destination phase, meaning I can't program a test for the Move action.")]
+        [TestMethod]
+        public void Card_Move_Success()
+        {
+            // Create
+
+            var title = "Test Card " + DateTime.Now.ToShortDateString();
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PipeID"] = pipe.Id;
+            dict["Title"] = title;
+            dict["DueDate"] = DateTime.Now.AddDays(7);
+            dict["PhaseID"] = simplePhase.Id;
+
+            PipefyQueryActivity act = new CreateCard();
+
+            var result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var cardId = (long)result["CardID"];
+
+            // Move
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+            dict["PhaseID"] = customFieldsPhase.Id;
+
+            act = new MoveCardToPhase();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
 
             // Delete
 
