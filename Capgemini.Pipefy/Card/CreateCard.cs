@@ -14,7 +14,7 @@ namespace Capgemini.Pipefy.Card
     public class CreateCard : PipefyQueryActivity
     {
         private const string CreateCardQuery = "mutation {{ createCard(input: {{ pipe_id: {0} {1} {2} }}) {3} }}";
-        private const string CreateCardFieldQueryPart = "{{ field_id: \"{0}\" field_value: \"{1}\" }}";
+        private const string CreateCardFieldQueryPart = "{{ field_id: \"{0}\" field_value: {1} }}";
         private const string CreateCardReturnQuery = "{ card { createdAt createdBy { email id name } current_phase { id name } due_date expiration { shouldExpireAt } id url } }";
 
         [Category("Input")]
