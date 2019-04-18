@@ -53,35 +53,42 @@ namespace Capgemini.Pipefy
             {
                 var id = field["field"].Value<string>("id");
                 var type = field["field"].Value<string>("type");
-                switch (type.ToLower())
+                try
                 {
-                    case "attachment":
-                    case "checklist_horizontal":
-                    case "checklist_vertical":
-                    case "connector":
-                        var items  = new List<string>();
-                        var jArray = field["array_value"] as JArray;
-                        foreach (var item in jArray)
-                            items.Add(item.Value<string>());
-                        dict.Add(id, items.ToArray());
-                        break;
-                    case "due_date":
-                    case "datetime":
-                        var dtValue = field.Value<string>("datetime_value");
-                        bool success = DateTime.TryParse(dtValue, out DateTime value);
-                        if (success)
-                            dict.Add(id, value);
-                        else
-                            goto default;
-                        break;
-                    case "date":
-                        var dateValue = field.Value<string>("value");
-                        var value2 = DateTime.ParseExact(dateValue, new string[]{ "MM/dd/yyyy", "yyyy-MM-dd" }, new CultureInfo("en-US"), DateTimeStyles.None);
-                        dict.Add(id, value2);
-                        break;
-                    default:
-                        dict.Add(id, field.Value<string>("value"));
-                        break;
+                    switch (type.ToLower())
+                    {
+                        case "attachment":
+                        case "checklist_horizontal":
+                        case "checklist_vertical":
+                        case "connector":
+                            var items  = new List<string>();
+                            var jArray = field["array_value"] as JArray;
+                            foreach (var item in jArray)
+                                items.Add(item.Value<string>());
+                            dict.Add(id, items.ToArray());
+                            break;
+                        case "due_date":
+                        case "datetime":
+                            var dtValue = field.Value<string>("datetime_value");
+                            bool success = DateTime.TryParse(dtValue, out DateTime value);
+                            if (success)
+                                dict.Add(id, value);
+                            else
+                                goto default;
+                            break;
+                        case "date":
+                            var dateValue = field.Value<string>("value");
+                            var value2 = DateTime.ParseExact(dateValue, new string[]{ "MM/dd/yyyy", "yyyy-MM-dd" }, new CultureInfo("en-US"), DateTimeStyles.None);
+                            dict.Add(id, value2);
+                            break;
+                        default:
+                            dict.Add(id, field.Value<string>("value"));
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    dict.Add(id, field.Value<string>("value"));
                 }
             }
 

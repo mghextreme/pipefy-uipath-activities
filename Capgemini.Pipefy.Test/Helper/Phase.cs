@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace Capgemini.Pipefy.Test.Helper
 {
@@ -7,7 +9,7 @@ namespace Capgemini.Pipefy.Test.Helper
     {
         private const string CreatePhaseQuery = "mutation {{ createPhase(input: {{ pipe_id: {0} name: {1} done: {2} }}){{ phase {{ created_at done id name }} }} }}";
         private const string DeletePhaseQuery = "mutation {{ deletePhase(input: {{ id: {0} }}){{ success }} }}";
-        private const string CreatePhaseFieldQuery = "mutation {{ createPhaseField(input: {{ phase_id: {0} label: {1} type: {2} required: {3} }}){{ phase_field {{ id is_multiple label required type }} }} }}";
+        private const string CreatePhaseFieldQuery = "mutation {{ createPhaseField(input: {{ phase_id: {0} label: {1} type: {2} required: {3} {4} }}){{ phase_field {{ id is_multiple label required type }} }} }}";
 
         public long Id { get; protected set; }
         public string Name { get; protected set; }
@@ -35,6 +37,29 @@ namespace Capgemini.Pipefy.Test.Helper
             var addedField = CreatePhaseField(this, field);
             Fields.Add(addedField);
             return addedField;
+        }
+
+        public Dictionary<string, object> GenerateRandomCardDictionary()
+        {
+            var fields = new Dictionary<string, object>();
+            foreach (var item in Fields)
+                fields.Add(item.Id, item.GetRandomValue());
+            return fields;
+        }
+
+        public DataRow GenerateRandomCardDataRow()
+        {
+            var dataTable = new DataTable(Name);
+            
+            foreach (var item in Fields)
+                dataTable.Columns.Add(item.Id);
+
+            var row = dataTable.NewRow();
+            foreach (var item in Fields)
+                row[item.Id] = item.GetRandomValue();
+            dataTable.Rows.Add(row);
+
+            return row;
         }
 
         #region Static
@@ -65,7 +90,11 @@ namespace Capgemini.Pipefy.Test.Helper
             var testConfig = TestConfiguration.Instance;
             var bearer = testConfig.GetBearer();
 
-            var queryString = string.Format(CreatePhaseFieldQuery, phase.Id.ToQueryValue(), field.Label.ToQueryValue(), field.Type.ToQueryValue(), field.IsRequired.ToQueryValue());
+            string customOptions = string.Empty;
+            if (field is OptionsCustomField options)
+                customOptions = "options: " + options.Options.ToArray().ToQueryValue();
+
+            var queryString = string.Format(CreatePhaseFieldQuery, phase.Id.ToQueryValue(), field.Label.ToQueryValue(), field.Type.ToQueryValue(), field.IsRequired.ToQueryValue(), customOptions);
             var query = new PipefyQuery(queryString, bearer);
             var result = query.Execute();
             var resultObj = PipefyQuery.ParseJson(result);

@@ -1,5 +1,7 @@
 using System;
 using System.Activities;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Capgemini.Pipefy.Card;
 using Capgemini.Pipefy.Phase;
@@ -31,6 +33,12 @@ namespace Capgemini.Pipefy.Test
             customFieldsPhase.CreateField(stringField);
             var dateTimeField = new Helper.CustomField("Bought on", "datetime");
             customFieldsPhase.CreateField(dateTimeField);
+            var productionField = new Helper.CustomField("Production date", "date");
+            customFieldsPhase.CreateField(productionField);
+            var checklistField = new Helper.OptionsCustomField("Optionals", "checklist_vertical", new string[]{ "Air-conditioning", "Hidraulic drive", "ABS brakes" });
+            customFieldsPhase.CreateField(checklistField);
+            var goodUntilField = new Helper.CustomField("Good until", "due_date");
+            customFieldsPhase.CreateField(goodUntilField);
         }
 
         [ClassCleanup]
@@ -169,6 +177,84 @@ namespace Capgemini.Pipefy.Test
             act = new DeleteCard();
             result = WorkflowInvoker.Invoke(act, dict);
             Assert.IsTrue((bool)result["Success"]);
+        }
+
+        [TestMethod]
+        public void Card_UpdateField_Success()
+        {
+            // Create
+
+            var title = "Test Card Field " + DateTime.Now.ToShortDateString();
+            var dict = testConfig.GetDefaultActivityArguments();
+            var cardDict = customFieldsPhase.GenerateRandomCardDictionary();
+            dict["PipeID"] = pipe.Id;
+            dict["PhaseID"] = customFieldsPhase.Id;
+            dict["Title"] = title;
+            dict["DueDate"] = DateTime.Now.AddDays(6);
+            dict["DictionaryFields"] = cardDict;
+
+            PipefyQueryActivity act = new CreateCard();
+
+            var result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var cardId = (long)result["CardID"];
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new GetCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+
+            var cardResult = (Dictionary<string, object>)result["CardFieldsDictionary"];
+            Assert.AreEqual(cardDict["mileage"].ToString(), cardResult["mileage"].ToString());
+            Assert.AreEqual(cardDict["chassi_code"].ToString(), cardResult["chassi_code"].ToString());
+            Assert.AreEqual(cardDict["production_date"].ToString(), cardResult["production_date"].ToString());
+            CompareDateTime((DateTime)cardDict["bought_on"], cardResult["bought_on"].ToString());
+            CompareDateTime((DateTime)cardDict["good_until"], cardResult["good_until"].ToString());
+
+            // Update
+
+            cardDict["mileage"] = (long)cardDict["mileage"] + 10;
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+            dict["FieldID"] = "mileage";
+            dict["Value"] = cardDict["mileage"];
+
+            act = new UpdateCardField();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+
+            // Get
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new GetCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+
+            cardResult = (Dictionary<string, object>)result["CardFieldsDictionary"];
+            Assert.AreEqual(cardDict["mileage"].ToString(), cardResult["mileage"].ToString());
+
+            // Delete
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            act = new DeleteCard();
+            result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+        }
+
+        private void CompareDateTime(DateTime expectedDate, string current)
+        {
+            var currentDate = DateTime.Parse(current, CultureInfo.InvariantCulture);
+            expectedDate = expectedDate.AddSeconds(-expectedDate.Second);
+            currentDate = currentDate.AddSeconds(-currentDate.Second);
+            Assert.AreEqual(expectedDate.ToString("s"), currentDate.ToString("s"));
         }
     }
 }
