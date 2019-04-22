@@ -78,7 +78,7 @@ namespace Capgemini.Pipefy
                             break;
                         case "date":
                             var dateValue = field.Value<string>("value");
-                            var value2 = DateTime.ParseExact(dateValue, new string[]{ "MM/dd/yyyy", "yyyy-MM-dd" }, new CultureInfo("en-US"), DateTimeStyles.None);
+                            var value2 = DateTime.ParseExact(dateValue, new string[]{ "yyyy-MM-dd", "MM/dd/yyyy", "dd/MM/yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None);
                             dict.Add(id, value2);
                             break;
                         default:

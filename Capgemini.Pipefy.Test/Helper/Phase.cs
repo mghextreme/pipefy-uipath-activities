@@ -9,7 +9,7 @@ namespace Capgemini.Pipefy.Test.Helper
     {
         private const string CreatePhaseQuery = "mutation {{ createPhase(input: {{ pipe_id: {0} name: {1} done: {2} }}){{ phase {{ created_at done id name }} }} }}";
         private const string DeletePhaseQuery = "mutation {{ deletePhase(input: {{ id: {0} }}){{ success }} }}";
-        private const string CreatePhaseFieldQuery = "mutation {{ createPhaseField(input: {{ phase_id: {0} label: {1} type: {2} required: {3} {4} }}){{ phase_field {{ id is_multiple label required type }} }} }}";
+        private const string CreatePhaseFieldQuery = "mutation {{ createPhaseField(input: {{ phase_id: {0} label: {1} type: {2} required: {3} connectedRepoId: {4} {5} }}){{ phase_field {{ id is_multiple label required type }} }} }}";
 
         public long Id { get; protected set; }
         public string Name { get; protected set; }
@@ -67,6 +67,7 @@ namespace Capgemini.Pipefy.Test.Helper
         internal static Phase CreatePhase(Pipe pipe, string name, bool done = false)
         {
             var newPhase = new Phase(){
+                Pipe = pipe,
                 Name = name,
                 Done = done
             };
@@ -94,7 +95,7 @@ namespace Capgemini.Pipefy.Test.Helper
             if (field is OptionsCustomField options)
                 customOptions = "options: " + options.Options.ToArray().ToQueryValue();
 
-            var queryString = string.Format(CreatePhaseFieldQuery, phase.Id.ToQueryValue(), field.Label.ToQueryValue(), field.Type.ToQueryValue(), field.IsRequired.ToQueryValue(), customOptions);
+            var queryString = string.Format(CreatePhaseFieldQuery, phase.Id.ToQueryValue(), field.Label.ToQueryValue(), field.Type.ToQueryValue(), field.IsRequired.ToQueryValue(), phase.Pipe.Id.ToQueryValue(), customOptions);
             var query = new PipefyQuery(queryString, bearer);
             var result = query.Execute();
             var resultObj = PipefyQuery.ParseJson(result);
