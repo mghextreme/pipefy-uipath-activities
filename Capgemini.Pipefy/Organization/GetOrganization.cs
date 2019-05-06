@@ -11,7 +11,7 @@ namespace Capgemini.Pipefy.Organization
     [Description("Gets detailed information on an Organization.")]
     public class GetOrganization : PipefyQueryActivity
     {
-        private const string GetOrganizationQuery = "query {{ phase(id: {0}){{ id name pipes(include_publics: true onlyFullyVisible: false) {{ cards_count description id name opened_cards_count public role }} role tables {{ edges {{ node {{ id name public url }} }} }} users {{ email id name }} }} }}";
+        private const string GetOrganizationQuery = "query {{ organization(id: {0}){{ id name pipes(include_publics: true onlyFullyVisible: false) {{ cards_count description id name opened_cards_count public role }} role tables {{ edges {{ node {{ id name public url }} }} }} users {{ email id name }} }} }}";
 
         [Category("Input")]
         [Description("ID of the Organization to be obtained")]

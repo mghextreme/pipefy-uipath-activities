@@ -28,7 +28,7 @@ namespace Capgemini.Pipefy.Organization
             if (orgId == null)
                 orgId = new long[0];
 
-            return string.Format(GetOrganizationsQuery, orgId);
+            return string.Format(GetOrganizationsQuery, orgId.ToQueryValue());
         }
 
         protected override void ParseResult(CodeActivityContext context, JObject json)
