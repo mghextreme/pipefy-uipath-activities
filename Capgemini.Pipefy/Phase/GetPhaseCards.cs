@@ -69,6 +69,9 @@ namespace Capgemini.Pipefy.Phase
             var first = Amount.Get(context);
             var after = AfterCursor.Get(context);
 
+            if (first <= 0)
+                first = 20;
+
             cardsInput.Add("first: " + first);
 
             if (!string.IsNullOrWhiteSpace(after))

@@ -249,6 +249,48 @@ namespace Capgemini.Pipefy.Test
             Assert.IsTrue((bool)result["Success"]);
         }
 
+        [TestMethod]
+        public void Phase_GetPhaseCards_Success()
+        {
+            // Create
+
+            var dict = testConfig.GetDefaultActivityArguments();
+            dict["PipeID"] = pipe.Id;
+            dict["Title"] = "Test Card " + DateTime.Now.ToShortDateString();
+            dict["DueDate"] = DateTime.Now.AddDays(6);
+            dict["PhaseID"] = simplePhase.Id;
+
+            var act = new CreateCard();
+
+            var result = WorkflowInvoker.Invoke(act, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            Assert.AreEqual(act.SuccessMessage, result["Status"].ToString());
+            long cardId = (long)result["CardID"];
+            Assert.IsTrue(cardId > 0);
+
+            // Get Phase
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["PhaseID"] = simplePhase.Id;
+
+            var act3 = new GetPhaseCards();
+
+            result = WorkflowInvoker.Invoke(act3, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            var cards = result["Cards"] as JObject[];
+            Assert.AreEqual(1, cards.Length);
+
+            // Delete
+
+            dict = testConfig.GetDefaultActivityArguments();
+            dict["CardID"] = cardId;
+
+            var act2 = new DeleteCard();
+            result = WorkflowInvoker.Invoke(act2, dict);
+            Assert.IsTrue((bool)result["Success"]);
+            Assert.AreEqual(act2.SuccessMessage, result["Status"].ToString());
+        }
+
         private void CompareDateTime(DateTime expectedDate, string current)
         {
             var currentDate = DateTime.Parse(current, CultureInfo.InvariantCulture);
