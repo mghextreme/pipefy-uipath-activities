@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Capgemini.Pipefy.Activities</id>
-    <version>2.1.4</version>
+    <version>2.1.4.1</version>
     <title>Capgemini.Pipefy</title>
     <authors>Capgemini</authors>
     <owners>Capgemini</owners>
@@ -13,6 +13,9 @@
     <license type="expression">MIT</license>
     <projectUrl>https://mghextreme.github.io/pipefy-uipath-activities/</projectUrl>
     <repository type="git" url="https://github.com/mghextreme/pipefy-uipath-activities" branch="master" />
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="11.0.2" />
+    </dependencies>
   </metadata>
   <files>
     <file src="Capgemini.Pipefy\bin\Release\net461\Capgemini.Pipefy.dll" target="lib" />
