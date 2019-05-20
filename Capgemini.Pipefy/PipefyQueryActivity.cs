@@ -12,10 +12,10 @@ namespace Capgemini.Pipefy
     public abstract class PipefyQueryActivity : CodeActivity
     {
         /// <summary>
-        /// The user API Key
+        /// The Personal Access Token
         /// </summary>
         [Category("Input")]
-        [Description("The user API Key")]
+        [Description("The Personal Access Token")]
         [RequiredArgument]
         public InArgument<string> Bearer { get; set; }
 
