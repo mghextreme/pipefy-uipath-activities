@@ -75,7 +75,7 @@ namespace Capgemini.Pipefy.Phase
             cardsInput.Add("first: " + first);
 
             if (!string.IsNullOrWhiteSpace(after))
-                cardsInput.Add(string.Format("title: {0}", after.ToQueryValue()));
+                cardsInput.Add(string.Format("after: {0}", after.ToQueryValue()));
 
             var searchFields = new List<string>();
             var assignees = AssignedTo.Get(context);
