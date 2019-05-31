@@ -56,7 +56,8 @@ Pipefy is a cloud-based business process management platform that empowers manag
 
 ### Custom
 
-- [Custom Query](docs/custom-query.md)
+- [ExecuteQuery](docs/executeQuery.md)
+- [Custom Queries](docs/custom-queries.md)
 
 ---
 

@@ -48,6 +48,9 @@ In this case, the result would be something like:
 }
 ```
 
+To test custom queries you can login into Pipefy and go to [GraphiQL](https://app.pipefy.com/graphiql) to run them.  
+All queries should be inside either a `query { }` or `mutation { }` statement. You can check the full documentation on the right sidebar by clicking the _Docs_ link by the top right.
+
 ---
 
 [All actions](../README.md)
